@@ -2,6 +2,7 @@
 
 	include 'headers/connect_to_mysql.php';
 	include 'headers/session.php';
+	
 	if($_POST)
 	{
 		
@@ -32,11 +33,46 @@
 		$user_id = $row['maxID'];
 		
 		
-	
-		$query_extra = "INSERT INTO `query`(`user_id`, `emp_id`, `package_id`,`description`, `time_stamp`) VALUES ('$user_id','$emp_id','$packageID','$description',now())"
-		or die ('sorry there is an error in login Insert code');
-		$result_extra = mysqli_query($con,$query_extra);
-	}
+		
+		/*
+			INSERTING MULTIPLE QUERIES BELOW.
+		*/
+		
+		
+		
+		
+		if(isset($_POST["packageID"]))
+		{
+			echo "INSIDE IF: <br/>";
+			/*foreach($_POST["packageID"] as $result) 
+			{
+    			echo $result, '<br>';
+			}
+			
+			foreach($_POST["description"] as $result) 
+			{
+    			echo $result, '<br>';
+			}*/
+			
+			$packageIDArray = $_POST['packageID'];
+			$descriptionArray = $_POST['description'];
+			
+			for($i=0; $i<count($_POST['packageID']); $i++)
+			{
+				/*echo "PACKAGEID: ". $packageIDArray[$i];
+				echo "<br/>";
+				echo "DESCRIPTION: " . $descriptionArray[$i];*/
+				
+				$query = "INSERT into query(`user_id`,`emp_id`,`package_id`,`time_stamp`,`description`)
+						VALUES ('$user_id','$emp_id','$packageIDArray[$i]',now(),'$descriptionArray[$i]')";
+				$result = mysqli_query($con,$query);
+				
+			}
+			
+			
+		}
+		
+}
 	
 
 
@@ -250,30 +286,24 @@ include 'headers/menu-top-navigation.php';
                            <div class="control-group">
                               <label class="control-label">Packages</label>
                               <div class="controls">
-                                 <select id="inputPackages" name="packageID" class="span6 chosen" data-placeholder="Choose a Category" tabindex="1">
+                                 <select id="inputPackages" name="packageID[0]" class="span6 chosen" data-placeholder="Choose a Category" tabindex="1">
                                     <?php
 									
-									$query_package = "SELECT * FROM `package`";
-									$result_package = mysqli_query($con,$query_package);
-									while($row_package = mysqli_fetch_array($result_package))
-									{
-										$package_name = $row_package['package_name'];
-										$package_id = $row_package['package_id'];
-										echo "
-                                     		<option value='{$package_id}'>{$package_name}</option>
-                                		 ";
-									}
-								 ?>
+										include 'headers/package_detail.php';
+										
+								 	?>
+                                 
 								 </select>
                               </div>
-                           </div>
-                  
+                              </div>
                            <div class="control-group">
                               <label class="control-label">Description</label>
                               <div class="controls">
-                                 <textarea required name="description" id="inputDescription" class="span6 " rows="3"></textarea>
+                                 <textarea required name="description[0]" id="inputDescription" class="span6 " rows="3"></textarea>
                                 </div>
                            </div>
+
+									<span id="response"></span>
                                  </div>
                                  <div class="tab-pane" id="tab3">
                                     <h3 class="page-title">Finall Step</h3>
@@ -453,15 +483,27 @@ document.getElementById("inputDescription").onchange = function () {
          App.init();
       });
    </script>
-   <script>
+<script>
 var countBox =1;
 function addInput()
 {
-     var boxName="textBox"+countBox; 
-document.getElementById('responce').innerHTML+='<br/><label class="control-label">Username</label><input required name="package_name" id="'+boxName+'" type="text" class="span6"/><span  class="help-inline">Give your username</span></div><div><br/><div class="control-group"><label class="control-label">Description</label><div class="controls"><textarea required name="description" id="'+boxName+'" class="span6 " rows="3"></textarea></div></div><br/>';
+     var boxName="textBox"+countBox;
+	 
+	 /*Below code injects HTML onClick of AddNewButton*/
+	 
+	 document.getElementById('response').innerHTML+='<br/><label class="control-label">Package Name</label>\
+		<input required name="description['+ countBox +']" id="'+boxName+'" type="text" class="span6"/><span class="help-inline">Remove</span><br/>\
+		<label class="control-label">Packages</label>\
+		<select id="'+boxName+'" name="packageID['+ countBox +']" class="span6 chosen" data-placeholder="Choose a Category" tabindex="1">\
+			<?php include 'headers/package_detail.php'; ?>
+		</select><br/>';
+		//alert(document.getElementById('response').innerHTML);
+			
      countBox += 1;
 }
 </script>
+                   
+                   
 <!-- END JAVASCRIPTS -->
 </body>
 <!-- END BODY -->
