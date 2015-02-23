@@ -3,10 +3,11 @@
 	include 'headers/connect_to_mysql.php';
 	include 'headers/session.php';
 	
+	$formAction = "";
+	
 	if($_POST)
 	{
 		
-		//$user_id = $_POST['user_id'];
 		$emp_id = $_SESSION['emp_id'];	
 		$user_name = $_POST['user_name'];
 		$mobile = $_POST['mobile'];
@@ -16,80 +17,100 @@
 		$email = $_POST['email'];
 		$packageID = $_POST['packageID'];
 		$description = $_POST['description'];
-	
+		$queryID = $_POST['queryID']; // hidden field
 		
-		$query = "INSERT INTO `form`(`emp_id`,`user_name`, `mobile`, `mobile_other`, `tele`, `location`, `email`, `time_stamp`) VALUES ('$emp_id','$user_name','$mobile','$mobile_other','$tele','$location','$email',now())"
-		or die ('sorry there is an error in login Insert code');
-		$result = mysqli_query($con,$query);
-		
-		/* 
-			GETTING THE LAST ROW THAT IS INSERTED.
-		*/
-		
-		
-		$query = "select max(`user_id`) as maxID from `form`";
-		$result = mysqli_query($con,$query);
-		$row = mysqli_fetch_assoc($result);
-		$user_id = $row['maxID'];
-		
-		
-		
-		/*
-			INSERTING MULTIPLE QUERIES BELOW.
-		*/
-		
-		
-		
-		
-		if(isset($_POST["packageID"]))
+		if(isset($_GET['customerID']))
 		{
-			echo "INSIDE IF: <br/>";
-			/*foreach($_POST["packageID"] as $result) 
-			{
-    			echo $result, '<br>';
-			}
+			/* UPDATE THE EXISTING CUSTOMER */
+			$customerID = $_GET['customerID'];
+			$query = "UPDATE `form` SET `emp_id` = '$emp_id', `user_name` = '$user_name', `mobile` = '$mobile', `mobile_other` = '$mobile_other', `tele` = '$tele', `location` = '$location', `email` = '$email', `time_stamp` = now() WHERE user_id = '$customerID'";
+			$result = mysqli_query($con,$query);
 			
-			foreach($_POST["description"] as $result) 
-			{
-    			echo $result, '<br>';
-			}*/
-			
-			$packageIDArray = $_POST['packageID'];
-			$descriptionArray = $_POST['description'];
 			
 			for($i=0; $i<count($_POST['packageID']); $i++)
 			{
-				/*echo "PACKAGEID: ". $packageIDArray[$i];
+				/*echo "PACKAGE ID: ". $packageID[$i];
 				echo "<br/>";
-				echo "DESCRIPTION: " . $descriptionArray[$i];*/
-				
-				$query = "INSERT into query(`user_id`,`emp_id`,`package_id`,`time_stamp`,`description`)
-						VALUES ('$user_id','$emp_id','$packageIDArray[$i]',now(),'$descriptionArray[$i]')";
-				$result = mysqli_query($con,$query);
-				
+				echo "Description: " . $description[$i];
+				echo "<br/>";
+				echo "QueryID: " . $queryID[$i];
+				echo "<br/>";*/
+			
+				$query = "UPDATE `query` set `package_id` = '$packageID[$i]', `time_stamp` = now(), `description` = '$description[$i]', 
+							`emp_id` = '$emp_id' WHERE `id` = '$queryID[$i]'";
+				$result = mysqli_query($con,$query) or die("ERROR!");
 			}
 			
 			
-		}
+		} // ENDING IF OF ISSET.
+		else
+		{
 		
-}
+			$query = "INSERT INTO `form`(`emp_id`,`user_name`, `mobile`, `mobile_other`, `tele`, `location`, `email`, `time_stamp`) VALUES ('$emp_id','$user_name','$mobile','$mobile_other','$tele','$location','$email',now())"
+			or die ('sorry there is an error in login Insert code');
+			$result = mysqli_query($con,$query);
+			
+			/* 
+				GETTING THE LAST ROW THAT IS INSERTED.
+			*/
+			
+			
+			$query = "select max(`user_id`) as maxID from `form`";
+			$result = mysqli_query($con,$query);
+			$row = mysqli_fetch_assoc($result);
+			$user_id = $row['maxID'];
+			
+			
+			
+			/*
+				INSERTING MULTIPLE QUERIES BELOW.
+			*/
+			
+			
+			
+			
+				if(isset($_POST["packageID"]))
+				{
+					
+					$packageIDArray = $_POST['packageID'];
+					$descriptionArray = $_POST['description'];
+					
+					for($i=0; $i<count($_POST['packageID']); $i++)
+					{
+						/*echo "PACKAGEID: ". $packageIDArray[$i];
+						echo "<br/>";
+						echo "DESCRIPTION: " . $descriptionArray[$i];*/
+						
+						$query = "INSERT into query(`user_id`,`emp_id`,`package_id`,`time_stamp`,`description`)
+								VALUES ('$user_id','$emp_id','$packageIDArray[$i]',now(),'$descriptionArray[$i]')";
+						$result = mysqli_query($con,$query);
+						
+					}
+					
+					
+				}
+			} // ENDING ELSE OF ISSET()
+			
+		} // IF Post ends here.
 	
-
-
-	
-	
-
-	/*if($old_empID == $SESSION['emp_id'])
-	{
-		$query_detailUpdate = "UPDATE * FROM login WHERE package = '$package', description = '$description'"
-		or die ('sorry there is an error in package update code');
-	}
 	else
 	{
-		$query_detailInsert = "INSERT INTO `query`(`user_id`,`emp_id`,`package_id`,`description`, `time_stamp`) 
-		VALUES('$emp_id','$package_id','$description',now())"
-		or die ('sorry there is an error in query code');
-	} */
+		if(isset($_GET['customerID']))
+		{
+			$customerID = $_GET['customerID'];
+			$formAction = "?customerID={$customerID}";
+			$query = "SELECT * from `form` where `user_id` = '{$customerID}'";
+			$result = mysqli_query($con,$query);
+			$row = mysqli_fetch_assoc($result);
+			$user_name = $row['user_name'];
+			$mobile = $row['mobile'];
+			$mobile_other = $row['mobile_other'];
+			$tele = $row['tele'];
+			$location = $row['location'];
+			$email = $row['email'];
+			
+		}
+	}
 	
 ?>
 
@@ -107,31 +128,29 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 <meta content="" name="description" />
 <meta content="" name="author" />
-   <link href="stylesheet/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-   <link href="stylesheet/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
-   <link href="stylesheet/bootstrap/css/bootstrap-fileupload.css" rel="stylesheet" />
-   <link href="stylesheet/font-awesome/css/font-awesome.css" rel="stylesheet" />
-   <link href="css/style.css" rel="stylesheet" />
-   <link href="css/style_responsive.css" rel="stylesheet" />
-   <link href="css/style_default.css" rel="stylesheet" id="style_color" />
-   <link rel="stylesheet" href="stylesheet/data-tables/DT_bootstrap.css" />
-   <link rel="stylesheet" type="text/css" href="stylesheet/gritter/css/jquery.gritter.css" />
-   <link rel="stylesheet" type="text/css" href="stylesheet/chosen-bootstrap/chosen/chosen.css" />
-
-   <link href="stylesheet/fancybox/source/jquery.fancybox.css" rel="stylesheet" />
-   <link rel="stylesheet" type="text/css" href="stylesheet/gritter/css/jquery.gritter.css" />
-   <link rel="stylesheet" type="text/css" href="stylesheet/uniform/css/uniform.default.css" />
-   <link rel="stylesheet" type="text/css" href="stylesheet/chosen-bootstrap/chosen/chosen.css" />
-   <link rel="stylesheet" type="text/css" href="stylesheet/jquery-tags-input/jquery.tagsinput.css" />    
-   <link rel="stylesheet" type="text/css" href="stylesheet/clockface/css/clockface.css" />
-   <link rel="stylesheet" type="text/css" href="stylesheet/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />
-   <link rel="stylesheet" type="text/css" href="stylesheet/bootstrap-datepicker/css/datepicker.css" />
-   <link rel="stylesheet" type="text/css" href="stylesheet/bootstrap-timepicker/compiled/timepicker.css" />
-   <link rel="stylesheet" type="text/css" href="stylesheet/bootstrap-colorpicker/css/colorpicker.css" />
-   <link rel="stylesheet" href="stylesheet/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
-   <link rel="stylesheet" href="stylesheet/data-tables/DT_bootstrap.css" />
-   <link rel="stylesheet" type="text/css" href="stylesheet/bootstrap-daterangepicker/daterangepicker.css" />
-
+<link href="stylesheet/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="stylesheet/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+<link href="stylesheet/bootstrap/css/bootstrap-fileupload.css" rel="stylesheet" />
+<link href="stylesheet/font-awesome/css/font-awesome.css" rel="stylesheet" />
+<link href="css/style.css" rel="stylesheet" />
+<link href="css/style_responsive.css" rel="stylesheet" />
+<link href="css/style_default.css" rel="stylesheet" id="style_color" />
+<link rel="stylesheet" href="stylesheet/data-tables/DT_bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="stylesheet/gritter/css/jquery.gritter.css" />
+<link rel="stylesheet" type="text/css" href="stylesheet/chosen-bootstrap/chosen/chosen.css" />
+<link href="stylesheet/fancybox/source/jquery.fancybox.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="stylesheet/gritter/css/jquery.gritter.css" />
+<link rel="stylesheet" type="text/css" href="stylesheet/uniform/css/uniform.default.css" />
+<link rel="stylesheet" type="text/css" href="stylesheet/chosen-bootstrap/chosen/chosen.css" />
+<link rel="stylesheet" type="text/css" href="stylesheet/jquery-tags-input/jquery.tagsinput.css" />
+<link rel="stylesheet" type="text/css" href="stylesheet/clockface/css/clockface.css" />
+<link rel="stylesheet" type="text/css" href="stylesheet/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />
+<link rel="stylesheet" type="text/css" href="stylesheet/bootstrap-datepicker/css/datepicker.css" />
+<link rel="stylesheet" type="text/css" href="stylesheet/bootstrap-timepicker/compiled/timepicker.css" />
+<link rel="stylesheet" type="text/css" href="stylesheet/bootstrap-colorpicker/css/colorpicker.css" />
+<link rel="stylesheet" href="stylesheet/bootstrap-toggle-buttons/static/stylesheets/bootstrap-toggle-buttons.css" />
+<link rel="stylesheet" href="stylesheet/data-tables/DT_bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="stylesheet/bootstrap-daterangepicker/daterangepicker.css" />
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -166,230 +185,228 @@ include 'headers/menu-top-navigation.php';
             <h4><i class="icon-tags"></i> CRM Registration</h4>
             <span class="tools"> <a href="javascript:;" class="icon-chevron-down"></a> <a href="javascript:;" class="icon-remove"></a> </span> </div>
           <div class="widget-body">
-          <div class="alert alert-success">
-                                        <button class="close" data-dismiss="alert">×</button>
-                                        <strong>Welcome to CRM Registraion Portal</strong> 
-                                    </div>
-
-          
-           </div>
+            <div class="alert alert-success">
+              <button class="close" data-dismiss="alert">×</button>
+              <strong>Welcome to CRM Registraion Portal</strong> </div>
+          </div>
         </div>
       </div>
     </div>
-            <div class="row-fluid">
-               <div class="span12">
-                  <div class="widget box blue" id="form_wizard_1">
-                     <div class="widget-title">
-                        <h4>
-                           <i class="icon-reorder"></i> Form Wizard - <span class="step-title">Step 1 of 3</span>
-                        </h4>
-                        <span class="tools">
-                           <a href="javascript:;" class="icon-chevron-down"></a>
-                           <a href="javascript:;" class="icon-remove"></a>
-                        </span>
-                     </div>
-                     <div class="widget-body form">
-                        <form action="register_form.php" method="post" class="form-horizontal" id="myForm">
-                           <div class="form-wizard">
-                              <div class="navbar steps">
-                                 <div class="navbar-inner">
-                                    <ul class="row-fluid">
-                                       <li class="span3">
-                                          <a href="#tab1" data-toggle="tab" class="step active">
-                                          <span class="number">1</span>
-                                          <span class="desc"><i class="icon-ok"></i> Step 1</span>
-                                          </a>
-                                       </li>
-                                       <li class="span3">
-                                          <a href="#tab2" data-toggle="tab" class="step">
-                                          <span class="number">2</span>
-                                          <span class="desc"><i class="icon-ok"></i> Step 2</span>
-                                          </a>
-                                       </li>
-                                       <li class="span3">
-                                          <a href="#tab3" data-toggle="tab" class="step">
-                                          <span class="number">3</span>
-                                          <span class="desc"><i class="icon-ok"></i> Final Step</span>
-                                          </a>
-                                       </li>
-
-                                    </ul>
-                                 </div>
-                              </div>
-                              <div id="bar" class="progress progress-striped">
-                                 <div class="bar"></div>
-                              </div>
-                              <div class="tab-content">
-                                 <div class="tab-pane active" id="tab1">
-                                            <h3 class="page-title">Fill up step 1</h3>
-                                    <div class="control-group">
-                                       <label class="control-label">Username</label>
-                                       <div class="controls">
-                                          <div class="input-icon left">
-                                    <i class="icon-user"></i>
-                                          <input required name="user_name" id="inputUser" type="text" class="span6" />
-                                          <span class="help-inline">Give your username</span>
-                                       </div>
-                                    </div>
-                                    </div>
-                                    <div class="control-group">
-                                       <label class="control-label">Email</label>
-                                       <div class="controls">
-									<div class="input-icon left">
-                                    <i class="icon-envelope"></i>
-                                          <input required id="inputEmail" name="email" type="text" class="span6" />
-                                          <span class="help-inline">Give your Email</span>
-                                       </div>
-                                    </div>
-                                    </div>
-                                    <div class="control-group">
-                                       <label class="control-label">Location</label>
-                                       <div class="controls">
-									<div class="input-icon left">
-                                    <i class="icon-map-marker"></i>
-                                          <input required id="inputLocation" name="location" type="text" class="span6" />
-                                          <span class="help-inline">Give your Location</span>
-                                       </div>
-                                    </div>
-                                    </div>
-                                   <div class="control-group">
-                                    <label class="control-label">Mobile 1</label>
-                                    <div class="controls">
-                                        <input required id="inputMobile" name="mobile" class="span5" type="text" data-mask="9999-99-99-999" placeholder="">
-                                        <span class="help-inline">9999-99-99-999</span>
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label">Mobile 2</label>
-                                    <div class="controls">
-                                        <input id="inputMobile1" name="mobile_other" class="span5" type="text" data-mask="9999-99-99-999" placeholder=""
-                                        ><span class="help-inline">9999-99-99-999</span>
-                                    </div>
-                                </div>
-                                     <div class="control-group">
-                                    <label class="control-label">Tele #</label>
-                                    <div class="controls">
- 									<div class="input-icon left">
-                                    <i class="icon-book"></i>
-                                        <input required id="inputTele" name="tele" class="span5" type="text" data-mask="999-99999999" placeholder="" />
-                                        <span class="help-inline">999-99999999</span>
-                                    </div>
-                                </div>
-                                </div>
-                                 </div>
-                                 <div class="tab-pane" id="tab2">
-                                    <h3 class="page-title">Fill up step 2</h3>
-                                       <div class="btn-group">
-                    <button onclick="addInput()" type="button" class="btn green"> Add New <i class="icon-plus"></i> </button>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="widget box blue" id="form_wizard_1">
+          <div class="widget-title">
+            <h4> <i class="icon-reorder"></i> Form Wizard - <span class="step-title">Step 1 of 3</span> </h4>
+            <span class="tools"> <a href="javascript:;" class="icon-chevron-down"></a> <a href="javascript:;" class="icon-remove"></a> </span> </div>
+          <div class="widget-body form">
+            <form action="register_form.php<?php echo $formAction; ?>" method="post" class="form-horizontal" id="myForm">
+              <div class="form-wizard">
+                <div class="navbar steps">
+                  <div class="navbar-inner">
+                    <ul class="row-fluid">
+                      <li class="span3"> <a href="#tab1" data-toggle="tab" class="step active"> <span class="number">1</span> <span class="desc"><i class="icon-ok"></i> Step 1</span> </a> </li>
+                      <li class="span3"> <a href="#tab2" data-toggle="tab" class="step"> <span class="number">2</span> <span class="desc"><i class="icon-ok"></i> Step 2</span> </a> </li>
+                      <li class="span3"> <a href="#tab3" data-toggle="tab" class="step"> <span class="number">3</span> <span class="desc"><i class="icon-ok"></i> Final Step</span> </a> </li>
+                    </ul>
                   </div>
-
-                           <div class="control-group">
-                              <label class="control-label">Packages</label>
-                              <div class="controls">
-                                 <select id="inputPackages" name="packageID[0]" class="span6 chosen" data-placeholder="Choose a Category" tabindex="1">
-                                    <?php
+                </div>
+                <div id="bar" class="progress progress-striped">
+                  <div class="bar"></div>
+                </div>
+                <div class="tab-content">
+                  <div class="tab-pane active" id="tab1">
+                    <h3 class="page-title">Fill up step 1</h3>
+                    <div class="control-group">
+                      <label class="control-label">Username</label>
+                      <div class="controls">
+                        <div class="input-icon left"> <i class="icon-user"></i>
+                          <input required name="user_name" id="inputUser" type="text" class="span6" value="<?php echo $user_name; ?>" />
+                          <span class="help-inline"></span> </div>
+                      </div>
+                    </div>
+                    <div class="control-group">
+                      <label class="control-label">Email</label>
+                      <div class="controls">
+                        <div class="input-icon left"> <i class="icon-envelope"></i>
+                          <input required id="inputEmail" name="email" type="text" class="span6" value="<?php echo $email; ?>" />
+                          <span class="help-inline"></span> </div>
+                      </div>
+                    </div>
+                    <div class="control-group">
+                      <label class="control-label">Location</label>
+                      <div class="controls">
+                        <div class="input-icon left"> <i class="icon-map-marker"></i>
+                          <input required id="inputLocation" name="location" type="text" class="span6" value="<?php echo $location;?>" />
+                          <span class="help-inline"></span> </div>
+                      </div>
+                    </div>
+                    <div class="control-group">
+                      <label class="control-label">Mobile 1</label>
+                      <div class="controls">
+                        <input required id="inputMobile" name="mobile" class="span5" type="text" data-mask="9999-99-99-999" placeholder="" value="<?php echo $mobile; ?>">
+                        <span class="help-inline"></span> </div>
+                    </div>
+                    <div class="control-group">
+                      <label class="control-label">Mobile 2</label>
+                      <div class="controls">
+                        <input id="inputMobile1" name="mobile_other" class="span5" type="text" data-mask="9999-99-99-999" placeholder="" value="<?php echo $mobile_other; ?>"                                       >
+                        <span class="help-inline"></span> </div>
+                    </div>
+                    <div class="control-group">
+                      <label class="control-label">Tele #</label>
+                      <div class="controls">
+                        <div class="input-icon left"> <i class="icon-book"></i>
+                          <input required id="inputTele" name="tele" class="span5" type="text" data-mask="999-99999999" placeholder="" value="<?php echo $tele; ?>" />
+                          <span class="help-inline"></span> </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane" id="tab2">
+                    <h3 class="page-title">Fill up step 2</h3>
+                    <div class="btn-group">
+                      <button onclick="addInput()" type="button" class="btn green"> Add New <i class="icon-plus"></i> </button>
+                    </div>
+                    
+                    
+                    <?php 
+					
+						if(isset($_GET['customerID']))
+						{
+							
+							$query = "SELECT q.*,p.package_name FROM `query` q,`package`p where q.`user_id` = '{$customerID}' AND p.package_id = q.package_id";
+							$result = mysqli_query($con,$query);
+							
+							$counter = 0;
+							
+							while($row = mysqli_fetch_assoc($result))
+							{
+								$description = $row['description'];
+								$package_name = $row['package_name'];
+								$package_id = $row['package_id'];
+								$query_id = $row['id'];
+								
+								echo "<div class='control-group'>
+										  <label class='control-label'>Packages</label>
+										  <div class='controls'>
+											<select id='' name='packageID[{$counter}]' class='' data-placeholder='Choose a Category' tabindex='1'>
+											<option value='{$package_id}'>{$package_name}</option>
+												
+											</select>
+									  </div>
+									</div>
+									<div class='control-group'>
+									  <label class='control-label'>Description</label>
+									  <div class='controls'>
+										<textarea required name='description[{$counter}]' id='inputDescription' class='span6 ' rows='3'>{$description}
+										</textarea>
+									  </div>
+									</div>
+									<input type='text' name='queryID[{$counter}]' value='{$query_id}' style='display:none;'  />
+									";
+							
+							$counter++;
+							}
+						}
+						else
+						{
+							echo "<div class='control-group'>
+                      <label class='control-label'>Packages</label>
+                      <div class='controls'>
+                        <select id='inputPackages' name='packageID[0]' class='span6 chosen' data-placeholder='Choose a Category' tabindex='1'>
+                          <?php
 									
 										include 'headers/package_detail.php';
 										
 								 	?>
-                                 
-								 </select>
-                              </div>
-                              </div>
-                           <div class="control-group">
-                              <label class="control-label">Description</label>
-                              <div class="controls">
-                                 <textarea required name="description[0]" id="inputDescription" class="span6 " rows="3"></textarea>
-                                </div>
-                           </div>
-
-									<span id="response"></span>
-                                 </div>
-                                 <div class="tab-pane" id="tab3">
-                                    <h3 class="page-title">Finall Step</h3>
-									<div class="control-group">
-                                       <label class="control-label">UserName</label>
-                                       <div class="controls">
-                                          <input id="showUser" type="text" value="" class="span6" disabled />
-                                       </div>
-                                       </div>
-                                    <div class="control-group">
-                                       <label class="control-label">Email</label>
-                                       <div class="controls">
-                                          <input id="showEmail" type="text" value="" class="span6" disabled />
-                                       </div>
-                                       </div>
-                                    <div class="control-group">
-                                       <label class="control-label">Mobile 1</label>
-                                       <div class="controls">
-                                    <input id="showMobile" type="text" value="" class="span6" disabled />
-                                       </div>
-                                    </div>
-                                     <div class="control-group">
-                                       <label class="control-label">Mobile 2</label>
-                                       <div class="controls">
-                                    <input id="showMobile1" type="text" value="" class="span6" disabled />
-                                       </div>
-                                    </div>
-                                     <div class="control-group">
-                                       <label class="control-label">Tele #</label>
-                                       <div class="controls">
-                                    <input id="showTele" type="text" value="" class="span6" disabled />
-                                       </div>
-                                    </div>
-                                       <div class="control-group">
-                                       <label class="control-label">Location</label>
-                                       <div class="controls">
-                                    <input id="showLocation" type="text" value="" class="span6" disabled />
-                                       </div>
-                                    </div>
-                                     <div class="control-group">
-                                       <label class="control-label">Package</label>
-                                       <div class="controls">
-                                    <input id="showPackage" type="text" value="" class="span6" disabled />
-                                       </div>
-                                    </div>
-                                     <div class="control-group">
-                                       <label class="control-label">Description</label>
-                                       <div class="controls">
-                                    <input id="showDescription" type="text" value="" class="span6" disabled />
-                                       </div>
-                                    </div>
-                                    
-                                    <div class="control-group">
-                                       <label class="control-label"></label>
-                                       <div class="controls">
-                                          <label class="checkbox">
-                                          <input type="checkbox" value="" /> I am satisfied with my package
-                                          </label>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div class="form-actions clearfix">
-                                 <a href="javascript:;" class="btn button-previous">
-                                 <i class="icon-angle-left"></i> Back 
-                                 </a>
-                                 <a href="javascript:;" class="btn btn-primary blue button-next">
-                                 Continue <i class="icon-angle-right"></i>
-                                 </a>
-                                 <!-- <a href="" id="submitThis" class="btn btn-success button-submit" onClick="document.getElementById("myForm").submit();" >
-                                 Submit <i class="icon-ok"></i> -->
-                                 
-                                 <input type="submit" class="btn btn-success button-submit" />
-                                
-                                 
-                               
-                              </div>
-                           </div>
-                        </form>
-                     </div>
+                        </select>
+                      </div>
+                    </div>
+                    <div class='control-group'>
+                      <label class='control-label'>Description</label>
+                      <div class='controls'>
+                        <textarea required name='description[0]' id='inputDescription' class='span6 ' rows='3'></textarea>
+                      </div>
+                    </div>";
+						}
+					
+					?>
+                    
+                    
+                    <span id="response"></span> </div>
+                  <div class="tab-pane" id="tab3">
+                  	
+                    
+                    
+                    <!-- <h3 class="page-title">Finall Step</h3>
+                    <div class="control-group">
+                      <label class="control-label">Username</label>
+                      <div class="controls">
+                        <input id="showUser" type="text" value="" class="span6" disabled />
+                      </div>
+                    </div>
+                    <div class="control-group">
+                      <label class="control-label">Email</label>
+                      <div class="controls">
+                        <input id="showEmail" type="text" value="" class="span6" disabled />
+                      </div>
+                    </div>
+                    <div class="control-group">
+                      <label class="control-label">Mobile 1</label>
+                      <div class="controls">
+                        <input id="showMobile" type="text" value="" class="span6" disabled />
+                      </div>
+                    </div>
+                    <div class="control-group">
+                      <label class="control-label">Mobile 2</label>
+                      <div class="controls">
+                        <input id="showMobile1" type="text" value="" class="span6" disabled />
+                      </div>
+                    </div>
+                    <div class="control-group">
+                      <label class="control-label">Tele #</label>
+                      <div class="controls">
+                        <input id="showTele" type="text" value="" class="span6" disabled />
+                      </div>
+                    </div>
+                    <div class="control-group">
+                      <label class="control-label">Location</label>
+                      <div class="controls">
+                        <input id="showLocation" type="text" value="" class="span6" disabled />
+                      </div>
+                    </div>
+                    <div class="control-group">
+                      <label class="control-label">Package</label>
+                      <div class="controls">
+                        <input id="showPackage" type="text" value="" class="span6" disabled />
+                      </div>
+                    </div>
+                    <div class="control-group">
+                      <label class="control-label">Description</label>
+                      <div class="controls">
+                        <input id="showDescription" type="text" value="" class="span6" disabled />
+                      </div>
+                    </div>-->
                   </div>
-               </div>
-            </div>
-              <!-- END PAGE CONTENT--> 
-</div>
-<!-- END PAGE CONTAINER-->
+                  
+                </div>
+                <div class="form-actions clearfix"> <a href="javascript:;" class="btn button-previous"> <i class="icon-angle-left"></i> Back </a> <a href="javascript:;" class="btn btn-primary blue button-next"> Continue <i class="icon-angle-right"></i> </a> 
+                  <!-- <a href="" id="submitThis" class="btn btn-success button-submit" onClick="document.getElementById("myForm").submit();" >
+                                 Submit <i class="icon-ok"></i> -->
+                  
+                  
+                  
+                  
+                  <input type="submit" class="btn btn-success button-submit" />
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END PAGE CONTENT--> 
+  </div>
+  <!-- END PAGE CONTAINER--> 
 </div>
 <!-- END PAGE -->
 </div>
@@ -403,8 +420,8 @@ include 'headers/menu-top-navigation.php';
 <!-- Load javascripts at bottom, this will reduce page load time --> 
 <script src="script/jquery-1.8.3.min.js"></script> 
 <script src="stylesheet/bootstrap/js/bootstrap.min.js"></script> 
-<script src="stylesheet/bootstrap/js/bootstrap.min.js"></script>
-<script src="stylesheet/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+<script src="stylesheet/bootstrap/js/bootstrap.min.js"></script> 
+<script src="stylesheet/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script> 
 <script src="script/jquery.blockui.js"></script> 
 <!-- ie8 fixes --> 
 <!--[if lt IE 9]>
@@ -419,70 +436,68 @@ include 'headers/menu-top-navigation.php';
 <script src="script/scripts.js"></script> 
 <script src="stylesheet/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script> 
 <script src="script/table-editable.js"></script> 
-  <script type="text/javascript" src="stylesheet/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script> 
-   <script type="text/javascript" src="stylesheet/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
-   <script type="text/javascript" src="stylesheet/clockface/js/clockface.js"></script>
-   <script type="text/javascript" src="stylesheet/jquery-tags-input/jquery.tagsinput.min.js"></script>
-   <script type="text/javascript" src="stylesheet/bootstrap-toggle-buttons/static/js/jquery.toggle.buttons.js"></script>
-   <script type="text/javascript" src="stylesheet/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>   
-   <script type="text/javascript" src="stylesheet/bootstrap-daterangepicker/date.js"></script>
-   <script type="text/javascript" src="stylesheet/bootstrap-daterangepicker/daterangepicker.js"></script> 
-   <script type="text/javascript" src="stylesheet/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>  
-   <script type="text/javascript" src="stylesheet/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
-   <script type="text/javascript" src="stylesheet/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
-   <script src="stylesheet/fancybox/source/jquery.fancybox.pack.js"></script>
-   
-   <script src="script/scripts.js"></script>
+<script type="text/javascript" src="stylesheet/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script> 
+<script type="text/javascript" src="stylesheet/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script> 
+<script type="text/javascript" src="stylesheet/clockface/js/clockface.js"></script> 
+<script type="text/javascript" src="stylesheet/jquery-tags-input/jquery.tagsinput.min.js"></script> 
+<script type="text/javascript" src="stylesheet/bootstrap-toggle-buttons/static/js/jquery.toggle.buttons.js"></script> 
+<script type="text/javascript" src="stylesheet/bootstrap-datepicker/js/bootstrap-datepicker.js"></script> 
+<script type="text/javascript" src="stylesheet/bootstrap-daterangepicker/date.js"></script> 
+<script type="text/javascript" src="stylesheet/bootstrap-daterangepicker/daterangepicker.js"></script> 
+<script type="text/javascript" src="stylesheet/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script> 
+<script type="text/javascript" src="stylesheet/bootstrap-timepicker/js/bootstrap-timepicker.js"></script> 
+<script type="text/javascript" src="stylesheet/bootstrap-inputmask/bootstrap-inputmask.min.js"></script> 
+<script src="stylesheet/fancybox/source/jquery.fancybox.pack.js"></script> 
+<script src="script/scripts.js"></script> 
 <script>
 document.getElementById("inputUser").onchange = function () {
     document.getElementById("showUser").value = this.value;
 };
-</script>
+</script> 
 <script>
 document.getElementById("inputEmail").onchange = function () {
     document.getElementById("showEmail").value = this.value;
 };
-</script>
+</script> 
 <script>
 document.getElementById("inputLocation").onchange = function () {
     document.getElementById("showLocation").value = this.value;
 };
-</script>
+</script> 
 <script>
 document.getElementById("inputMobile").onchange = function () {
     document.getElementById("showMobile").value = this.value;
 };
-</script>
+</script> 
 <script>
 document.getElementById("inputMobile1").onchange = function () {
     document.getElementById("showMobile1").value = this.value;
 };
-</script>
+</script> 
 <script>
 document.getElementById("inputTele").onchange = function () {
     document.getElementById("showTele").value = this.value;
 };
-</script>
+</script> 
 <script>
 document.getElementById("inputPackages").onchange = function () {
-    document.getElementById("showPackage").value = this.value;
+    document.getElementById("showPackage").value = $( "#inputPackages option:selected" ).text();
 };
-</script>
+</script> 
 <script>
 document.getElementById("inputDescription").onchange = function () {
     document.getElementById("showDescription").value = this.value;
 };
-</script>
-
+</script> 
 <script>
-</script>
+</script> 
 <script>
 
       jQuery(document).ready(function() {       
          // initiate layout and plugins
          App.init();
       });
-   </script>
+   </script> 
 <script>
 var countBox =1;
 function addInput()
@@ -491,19 +506,52 @@ function addInput()
 	 
 	 /*Below code injects HTML onClick of AddNewButton*/
 	 
-	 document.getElementById('response').innerHTML+='<br/><label class="control-label">Package Name</label>\
-		<input required name="description['+ countBox +']" id="'+boxName+'" type="text" class="span6"/><span class="help-inline">Remove</span><br/>\
-		<label class="control-label">Packages</label>\
-		<select id="'+boxName+'" name="packageID['+ countBox +']" class="span6 chosen" data-placeholder="Choose a Category" tabindex="1">\
+	 /*document.getElementById('response').innerHTML+='<br/><label class="control-label">Packages</label>\
+	 	<select id="'+boxName+'" name="packageID['+ countBox +']" class="span6 chosen" data-placeholder="Choose a Category" tabindex="1">\
 			<?php include 'headers/package_detail.php'; ?>
-		</select><br/>';
-		//alert(document.getElementById('response').innerHTML);
+		</select><br/>\
+		<input required name="description['+ countBox +']" id="'+boxName+'" type="text" class="span6"/>\
+		<label class="control-label">Description</label>';*/
+		
+		
+		document.getElementById('response').innerHTML+='<div class="control-group">\
+                      <label class="control-label">Packages</label>\
+                      <div class="controls">\
+                        <select id="'+boxName+'" name="packageID['+ countBox +']" class="span6 chosen packageDropDown" data-placeholder="Choose a Category">\
+                          <?php
+									
+										include 'headers/package_detail.php';
+										
+								 	?>
+                        </select>\
+                      </div>\
+                    </div>\
+                    <div class="control-group">\
+                      <label class="control-label">Description</label>\
+                      <div class="controls">\
+                        <textarea required name="description['+ countBox +']" id="'+boxName+'" class="span6 " rows="3"></textarea>\
+                      </div>\
+                    </div>';
+		
+		
+		/* document.getElementById('tab3').innerHTML+='<div class="control-group">\
+                      <label class="control-label">Package</label>\
+                      <div class="controls">\
+                        <input id="showPackage" type="text" value="" class="span6" disabled />\
+                      </div>\
+                    </div>\
+                    <div class="control-group">\
+                      <label class="control-label">Description</label>\
+                      <div class="controls">\
+                        <input id="showDescription" type="text" value="" class="span6" disabled />\
+                      </div>\
+                    </div>'; */
+		
 			
      countBox += 1;
 }
-</script>
-                   
-                   
+</script> 
+
 <!-- END JAVASCRIPTS -->
 </body>
 <!-- END BODY -->

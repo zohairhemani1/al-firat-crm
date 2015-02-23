@@ -3880,3 +3880,8 @@ h3
     margin-left: 15%;
     margin-top: 29px;
 }
+
+select.packageDropDown
+{
+	width:345px !important;
+}
