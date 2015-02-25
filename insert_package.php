@@ -1,17 +1,45 @@
 <?php 
-if($_POST){
-	include 'headers/connect_to_mysql.php';
-	include 'headers/session.php';
-	$package_name = $_POST['package_name'];
-	$query = "SELECT * FROM package";
-	while($result = mysql_fetch_array($query)){
-    $insert_query = "INSERT INTO package(package_name) VALUES('$package_name')";
-	$result_query = mysqli_query($insert_query); 
-echo "hellalsmklasklalknslknalknlksnlanskln1lk2nlk1n2lkno";
-	}
-    $insert_query = "INSERT INTO package(package_name) VALUES('$package_name')";
-	$result_query = mysqli_query($con,$insert_query); 
+
+include 'headers/connect_to_mysql.php';
+$packageName = "";
+$formAction = "";
+
+	isset($_GET['packageID']);
+	echo "package_id-->{$packageID}";
+
+if(isset($_GET['packageID']))
+{
+	
+
+	$packageID = $_GET['packageID'];
+	$formAction = "?packageID={$packageID}";
+	$query = "SELECT * from `package` WHERE `package_id` = '{$packageID}'";
+	$result = mysqli_query($con,$query);
+	$row = mysqli_fetch_assoc($result);
+	$packageName = $row['package_name'];
 }
+
+if($_POST)
+{
+	if(isset($_GET['packageID']))
+	{
+		$packageName = $_POST['id'];
+		$packageName = $packageName[0];
+		$query = "UPDATE `package` SET `package_name` = '{$packageName}' WHERE `package_id` = '{$packageID}' ";
+		$result = mysqli_query($con,$query);
+		header('Location:package_view.php');
+	}
+	else
+	{
+		foreach($_POST['id'] as $key => $value) 
+		{
+			echo "KEY: ", $value;
+			$query = "INSERT INTO package(`package_name`) VALUES ('$value')";
+			$result = mysqli_query($con,$query);
+		}	
+	}
+}
+
 ?>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
@@ -24,7 +52,7 @@ echo "hellalsmklasklalknslknalknlksnlanskln1lk2nlk1n2lkno";
 <!-- Mirrored from thevectorlab.net/adminlab/editable_table.html by HTTrack Website Copier/3.x [XR&CO'2013], Tue, 04 Nov 2014 07:58:54 GMT -->
 <head>
 <meta charset="utf-8" />
-<title>Editable Tables</title>
+<title>Add Package</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 <meta content="" name="description" />
 <meta content="" name="author" />
@@ -61,15 +89,15 @@ include 'headers/menu-top-navigation.php';
     <!-- BEGIN PAGE HEADER-->
     <div class="row-fluid">
       <div class="span12"> 
-        <!-- BEGIN THEME CUSTOMIZER-->
-        <div id="theme-change" class="hidden-phone"> <i class="icon-cogs"></i> <span class="settings"> <span class="text">Theme:</span> <span class="colors"> <span class="color-default" data-style="default"></span> <span class="color-gray" data-style="gray"></span> <span class="color-purple" data-style="purple"></span> <span class="color-navy-blue" data-style="navy-blue"></span> </span> </span> </div>
-        <!-- END THEME CUSTOMIZER--> 
         <!-- BEGIN PAGE TITLE & BREADCRUMB-->
-        <h3 class="page-title"> Blank Page <small>blank page sample</small> </h3>
+        <h3 class="page-title">
+                     Al-Furat
+                     <small>Travel & Tours</small>
+                  </h3>
         <ul class="breadcrumb">
           <li> <a href="#"><i class="icon-home"></i></a><span class="divider">&nbsp;</span> </li>
-          <li> <a href="#">Sample Pages</a> <span class="divider">&nbsp;</span> </li>
-          <li><a href="#">Blank Page</a><span class="divider-last">&nbsp;</span></li>
+          <li> <a href="#"><?php echo strtoupper($_username); ?></a> <span class="divider">&nbsp;</span> </li>
+          <li><a href="#">Add Package</a><span class="divider-last">&nbsp;</span></li>
         </ul>
         <!-- END PAGE TITLE & BREADCRUMB--> 
       </div>
@@ -80,23 +108,30 @@ include 'headers/menu-top-navigation.php';
       <div class="span12">
         <div class="widget box blue" id="form_wizard_1">
           <div class="widget-title">
-            <h4> <i class="icon-reorder"></i> Form Wizard - <span class="step-title">Step 1 of 3</span> </h4>
+            <h4> <i class="icon-reorder"></i> Add Package Form <span class="step-title"></span> </h4>
             <span class="tools"> <a href="javascript:;" class="icon-chevron-down"></a> <a href="javascript:;" class="icon-remove"></a> </span> </div>
           <div class="widget-body form">
-            <form action="package.php" method="post" class="form-horizontal" id="myForm">
+            <form action="insert_package.php<?php echo $formAction; ?>" method="post" class="form-horizontal" id="myForm">
               <div class="form-wizard">
                 <div class="clearfix">
-                  <div class="btn-group">
-                    <button name="button" onclick="addInput()" type="button" class="btn green"> Add New <i class="icon-plus"></i> </button>
+                
+               
+                
+                  <div class="btn-group" style=" <?php if(isset($_GET['packageID']))
+				{
+					echo "display:none;";
+				}
+				?>">
+                    <button name="button" onclick="addInput()" type="button" class="btn green addPackage"> Add New <i class="icon-plus"></i> </button>
                   </div>
                   <div class="space15"></div>
                   <label class="control-label">Package Name</label>
-                  <input required name="package_name" type="text" class="span6" />
-                  <span class="help-inline">Give your Package Name</span> 
+                  <input required name="id[0]" type="text" class="span6" value = "<?php echo $packageName; ?>"/>
+                  <span class="help-inline"></span> 
                   </div>
               </div>
               <span id="responce"></span>
-              <input id="submit_package" type="submit" value="submit" class="btn btn-success " />
+              <input id="submit_package" type="submit" value="SUBMIT" class="btn btn-success " />
             </form>
           </div>
         </div>
@@ -110,7 +145,7 @@ include 'headers/menu-top-navigation.php';
 </div>
 <!-- END CONTAINER --> 
 <!-- BEGIN FOOTER -->
-<div id="footer"> 2013 &copy; Admin Lab Dashboard. </div>
+<div id="footer"> 2015 &copy; Digital Egg Heads. </div>
 <!-- END FOOTER --> 
 <!-- BEGIN JAVASCRIPTS --> 
 <!-- Load javascripts at bottom, this will reduce page load time --> 
@@ -141,13 +176,25 @@ include 'headers/menu-top-navigation.php';
        });
    </script> 
 <script>
+
 var countBox =1;
 function addInput()
 {
      var boxName="textBox"+countBox; 
-document.getElementById('responce').innerHTML+='<br/><label class="control-label">Package Name</label><input required name="package_name" id="'+boxName+'" type="text" class="span6"/><span class="help-inline">Remove</span></div></div><br/>';
+document.getElementById('responce').innerHTML+='<div id="delete"><br/><label class="control-label">Package Name</label>\
+<input required name="id['+countBox+']" id="'+boxName+'" type="text" class="span6"/><button class="Delete">Delete</button><br/>';
      countBox += 1;
+
 }
+</script>
+<script>
+$(function(){
+
+    $('.Delete').live('click',function(e){
+    $(this).parent().remove();
+    });
+ 
+});
 </script>
 </body>
 <!-- END BODY -->

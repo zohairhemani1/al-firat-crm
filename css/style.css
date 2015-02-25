@@ -3880,8 +3880,40 @@ h3
     margin-left: 15%;
     margin-top: 29px;
 }
-
-select.packageDropDown
-{
-	width:345px !important;
+#dropdown_chzn {
+    width: 11.3% !important;
+}
+.chzn-search {
+    width: 90.5% !important;
+	margin-top: -3px !important;
+}
+#date_range {
+    float: left;
+    width: 36%;
+}
+#_dropdown_chzn {
+    width: 11.4% !important;
+}
+.chzn-_search {
+    width: 87% !important ;
+	margin-top: -3px !important;
+}
+#package_drop {
+    width: 26%;
+	float: left;
+	margin-left: 7%;
+}
+#_customer {
+    width: 26%;
+	float: left;
+	margin-left: 1%;
+	margin-top: -1px;
+}
+#employe_input {
+    width: 8%;
+    float: left;
+    margin-left: 8%;
+}
+#text_field {
+    margin-top: 8px;
 }

@@ -1,5 +1,5 @@
 <?php
-
+		include 'connect_to_mysql.php';
 		$query_package = "SELECT * FROM `package`";
 		$result_package = mysqli_query($con,$query_package);
 		while($row_package = mysqli_fetch_array($result_package))

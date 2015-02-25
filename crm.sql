@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 23, 2015 at 11:22 AM
+-- Generation Time: Feb 23, 2015 at 06:46 PM
 -- Server version: 5.5.32
 -- PHP Version: 5.4.19
 
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `package` (
   `package_id` int(11) NOT NULL AUTO_INCREMENT,
   `package_name` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`package_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `package`
@@ -92,7 +92,7 @@ INSERT INTO `package` (`package_id`, `package_name`) VALUES
 (1, 'Hajj Package'),
 (2, 'Umrah Package'),
 (3, 'Malaysia'),
-(4, 'Dubai');
+(6, 'U.A.E');
 
 -- --------------------------------------------------------
 

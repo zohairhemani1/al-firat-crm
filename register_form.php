@@ -4,6 +4,17 @@
 	include 'headers/session.php';
 	
 	$formAction = "";
+	$emp_id = "";	
+	$user_name = "";
+	$mobile = "";
+	$mobile_other = "";
+	$tele = "";
+	$location = "";
+	$email = "";
+	$packageID = "";
+	$description = "";
+	$queryID = ""; // hidden field
+	
 	
 	if($_POST)
 	{
@@ -29,12 +40,6 @@
 			
 			for($i=0; $i<count($_POST['packageID']); $i++)
 			{
-				/*echo "PACKAGE ID: ". $packageID[$i];
-				echo "<br/>";
-				echo "Description: " . $description[$i];
-				echo "<br/>";
-				echo "QueryID: " . $queryID[$i];
-				echo "<br/>";*/
 			
 				$query = "UPDATE `query` set `package_id` = '$packageID[$i]', `time_stamp` = now(), `description` = '$description[$i]', 
 							`emp_id` = '$emp_id' WHERE `id` = '$queryID[$i]'";
@@ -177,21 +182,21 @@ include 'headers/menu-top-navigation.php';
     </div>
     <!-- END PAGE HEADER--> 
     <!-- BEGIN PAGE CONTENT-->
-    <div class="row-fluid">
+    <!-- <div class="row-fluid">
       <div class="span12"> 
-        <!-- BEGIN RECENT ORDERS PORTLET-->
+         BEGIN RECENT ORDERS PORTLET
         <div class="widget">
           <div class="widget-title">
             <h4><i class="icon-tags"></i> CRM Registration</h4>
             <span class="tools"> <a href="javascript:;" class="icon-chevron-down"></a> <a href="javascript:;" class="icon-remove"></a> </span> </div>
-          <div class="widget-body">
+           <div class="widget-body">
             <div class="alert alert-success">
               <button class="close" data-dismiss="alert">×</button>
               <strong>Welcome to CRM Registraion Portal</strong> </div>
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="row-fluid">
       <div class="span12">
         <div class="widget box blue" id="form_wizard_1">
@@ -312,13 +317,11 @@ include 'headers/menu-top-navigation.php';
 							echo "<div class='control-group'>
                       <label class='control-label'>Packages</label>
                       <div class='controls'>
-                        <select id='inputPackages' name='packageID[0]' class='span6 chosen' data-placeholder='Choose a Category' tabindex='1'>
-                          <?php
-									
-										include 'headers/package_detail.php';
-										
-								 	?>
-                        </select>
+                        <select id='inputPackages' name='packageID[0]' class='' data-placeholder='Choose a Category' tabindex='1'>";
+                         	
+								include 'headers/package_detail.php';
+								
+                        echo"</select>
                       </div>
                     </div>
                     <div class='control-group'>
@@ -502,17 +505,7 @@ document.getElementById("inputDescription").onchange = function () {
 var countBox =1;
 function addInput()
 {
-     var boxName="textBox"+countBox;
-	 
-	 /*Below code injects HTML onClick of AddNewButton*/
-	 
-	 /*document.getElementById('response').innerHTML+='<br/><label class="control-label">Packages</label>\
-	 	<select id="'+boxName+'" name="packageID['+ countBox +']" class="span6 chosen" data-placeholder="Choose a Category" tabindex="1">\
-			<?php include 'headers/package_detail.php'; ?>
-		</select><br/>\
-		<input required name="description['+ countBox +']" id="'+boxName+'" type="text" class="span6"/>\
-		<label class="control-label">Description</label>';*/
-		
+     var boxName="textBox"+countBox;	
 		
 		document.getElementById('response').innerHTML+='<div class="control-group">\
                       <label class="control-label">Packages</label>\
@@ -533,21 +526,6 @@ function addInput()
                       </div>\
                     </div>';
 		
-		
-		/* document.getElementById('tab3').innerHTML+='<div class="control-group">\
-                      <label class="control-label">Package</label>\
-                      <div class="controls">\
-                        <input id="showPackage" type="text" value="" class="span6" disabled />\
-                      </div>\
-                    </div>\
-                    <div class="control-group">\
-                      <label class="control-label">Description</label>\
-                      <div class="controls">\
-                        <input id="showDescription" type="text" value="" class="span6" disabled />\
-                      </div>\
-                    </div>'; */
-		
-			
      countBox += 1;
 }
 </script> 

@@ -32,7 +32,7 @@ echo"
                            </a>
                            <ul class='dropdown-menu extended notification'>
                                <li>
-                                   <p>You have 2 new notifications</p>
+                                   <p>You have 1 new notifications</p>
                                </li>
 							   <li>
                                    <a href='#'>
@@ -55,11 +55,11 @@ echo"
                    <ul class='nav pull-right top-menu' >
                        <!-- BEGIN SUPPORT -->
                      
-                       <li class='dropdown mtop5'>
-                           <a class='dropdown-toggle element' data-placement='bottom' data-toggle='tooltip' href='helpdesk.php' data-original-title='Help'>
+                      <!--  <li class='dropdown mtop5'>
+                           <a class='dropdown-toggle element' data-placement='bottom' data-toggle='tooltip' href='' data-original-title='Help'>
                                <i class='icon-headphones'></i>
                            </a>
-                       </li>
+                       </li> -->
                        <!-- END SUPPORT -->
                        <!-- BEGIN USER LOGIN DROPDOWN -->
                        <li class='dropdown'>
@@ -70,8 +70,8 @@ echo"
                                <b class='caret'></b>
                            </a>
                            <ul class='dropdown-menu'>
-                               <li><a href='invoice.php'><i class='icon-file'></i> Invoice</a></li>
-                               <li><a href='password.php'><i class='icon-asterisk'></i> Password</a></li>
+                               <!-- <li><a href='invoice.php'><i class='icon-file'></i> Invoice</a></li>
+                               <li><a href='password.php'><i class='icon-asterisk'></i> Password</a></li> -->
                                <li class='divider'></li>
                                <li><a href='login.php?logout=true'><i class='icon-key'></i> Log Out</a></li>
                            </ul>
@@ -97,11 +97,31 @@ echo"
          <!-- BEGIN SIDEBAR MENU -->
           <ul class='sidebar-menu'>
               <li><a class='' href='index.php'><span class='icon-box'><i class='icon-dashboard'></i></span>Index</a></li>
-              <li><a class='' href='register_form.php'><span class='icon-box'><i class='icon-user'></i></span>Registration</a></li>
-			  <li><a class='' href=''><span class='icon-box'><i class='icon-cogs'></i></span>Member Discounts</a></li>
-              <li class='has-sub'><a href='javascript:;' class=''><span class='icon-box'> <i class='icon-book'></i></span> Negotiation Update</a></li>
-              <li class='has-sub'><a href='javascript:;' class=''><span class='icon-box'> <i class='icon-dashboard'></i></span> Union News</a></li>
-              <li><a class='' href='about.php'><span class='icon-box'><i class='icon-user'></i></span>Upcoming Events</a></li>
+              <li><a class='' href='register_form.php'><span class='icon-box'><i class='icon-tasks'></i></span>Registration</a></li>
+			  			        <li class='has-sub'>
+                  <a href='javascript:;' class=''>
+                      <span class='icon-box'><i class='icon-th'></i></span> Package
+                      <span class='arrow'></span>
+                  </a>
+                  <ul class='sub'>
+                      <li><a class='' href='package_view.php'>View Package</a></li>
+                      <li><a class='' href='insert_package.php'>Insert Package</a></li>
+                      
+                  </ul>
+              </li>
+			        <li class='has-sub'>
+                  <a href='javascript:;' class=''>
+                      <span class='icon-box'><i class='icon-cogs'></i></span> Reporting
+                      <span class='arrow'></span>
+                  </a>
+                  <ul class='sub'>
+                      <li><a class='' href='package_.php'>Reporting </a></li>
+                      <li><a class='' href='insert_package.php'>Insert Reporting</a></li>
+                      
+                  </ul>
+              </li>
+
+
           </ul>
          <!-- END SIDEBAR MENU -->
       </div>

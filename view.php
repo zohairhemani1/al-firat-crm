@@ -3,47 +3,23 @@
 	include 'headers/connect_to_mysql.php';
 	include 'headers/session.php';
 	$user_id = $_GET['user_id'];
-	$package_id = $_GET['packagae_id'];	
-			if($_GET['update'] == 'true'){
-			$hide = "hide";
-			$disabled = "disabled";
-			echo "hide-->{$hide}<br>disanled-->{$disabled}";
-			}
 	
-	if($_POST)
-	{
-		
-		//$user_id = $_POST['user_id'];
-		$emp_id = $_SESSION['emp_id'];	
-		$user_name = $_POST['user_name'];
-		$mobile = $_POST['mobile'];
-		$mobile_other = $_POST['mobile_other'];
-		$tele = $_POST['tele'];
-		$location = $_POST['location'];
-		$email = $_POST['email'];
-		$packageID = $_POST['packageID'];
-		$description = $_POST['description'];
-
-	}
-	else
-	{
-	$query = "SELECT * FROM query a, form b, package c WHERE a.user_id AND b.user_id = '$user_id' AND a.package_id AND c.package_id = '$package_id' " 
-				or die ('error while fecthing detail for update ');	
-		$result = mysqli_query($con,$query);
-		$row = mysqli_fetch_array($result);
-        $package_name = $row['package_name'];
-		$tele = $row['tele'];
-		$location = $row['location'];
-		$email = $row['email'];
-		$description = $row['description'];
-		$mobile = $row['mobile'];
-		$mobile_other = $row['mobile_other'];
-		$user_name = $row['user_name'];
+	$query = "SELECT * from `form` WHERE `user_id` = '$user_id'" 
+			or die ('error while fecthing detail for update ');	
+	$result = mysqli_query($con,$query);
+	$row = mysqli_fetch_array($result);
+	$package_name = $row['package_name'];
+	$tele = $row['tele'];
+	$location = $row['location'];
+	$email = $row['email'];
+	$mobile = $row['mobile'];
+	$mobile_other = $row['mobile_other'];
+	$user_name = $row['user_name'];
 		
 
 
 
-	}
+	
 	
 ?>
 
@@ -117,7 +93,7 @@ include 'headers/menu-top-navigation.php';
                   <div class="widget box blue" id="form_wizard_1">
                      <div class="widget-title">
                         <h4>
-                           <i class="icon-reorder"></i> Form Wizard - <span class="step-title">Step 1 of 3</span>
+                           <i class="icon-reorder"></i> Al-Furat - <span class="step-title">Customer Details.</span>
                         </h4>
                         <span class="tools">
                            <a href="javascript:;" class="icon-chevron-down"></a>
@@ -130,7 +106,7 @@ include 'headers/menu-top-navigation.php';
                               <div class="tab-content">
 
 									<div class="control-group">
-                                       <label class="control-label">UserName</label>
+                                       <label class="control-label">Username</label>
                                        <div class="controls">
                                           <input id="showUser" type="text" value="<?php echo $user_name;?>" class="span6" <?php $disabled; ?>/>
                                        </div>
@@ -165,18 +141,40 @@ include 'headers/menu-top-navigation.php';
                                     <input id="showLocation" type="text" value="<?php echo $location;?>" class="span6" <?php $disabled; ?>/>
                                        </div>
                                     </div>
-                                     <div class="control-group">
-                                       <label class="control-label">Package</label>
-                                       <div class="controls">
-                                    <input id="showPackage" type="text" value="<?php echo $package_name;?>" class="span6" <?php $disabled; ?>/>
-                                       </div>
-                                    </div>
-                                     <div class="control-group">
-                                       <label class="control-label">Description</label>
-                                       <div class="controls">
-                                    <input id="showDescription" type="text" value="<?php echo $description;?>" class="span6" <?php $disabled; ?> />
-                                       </div>
-                                    </div>
+                                    
+                                    <?php
+										
+										$query = "SELECT q.*,p.package_name FROM `query` q,`package`p where q.`user_id` = '{$user_id}' 
+													AND p.package_id = q.package_id";
+										$result = mysqli_query($con,$query);
+										
+										$counter = 0;
+										while($row = mysqli_fetch_assoc($result))
+										{
+											$description = $row['description'];
+											$package_name = $row['package_name'];
+											$package_id = $row['package_id'];
+											$query_id = $row['id'];
+											
+											echo "<div class='control-group'>
+												   <label class='control-label'>Package</label>
+												   <div class='controls'>
+												<input id='showPackage' type='text' value='$package_name' class='span6 {$disabled}' />
+												   </div>
+												</div>
+												 <div class='control-group'>
+												   <label class='control-label'>Description</label>
+												   <div class='controls'>
+												<input id='showDescription' type='text' value='$description' class='span6 {$disabled}' />
+												   </div>
+												</div>";
+										
+										$counter++;
+										}
+													
+									?>
+                                    
+                                     
                                     
                                  </div>
                               </div>
@@ -203,7 +201,7 @@ include 'headers/menu-top-navigation.php';
 </div>
 <!-- END CONTAINER --> 
 <!-- BEGIN FOOTER -->
-<div id="footer"> <a href ="https://www.facebook.com/avialdo.inc">2014-15 &copy; Avialdo.</a>
+<div id="footer"> <a href ="https://www.facebook.com/avialdo.inc">2014-15 &copy; Digital Egg Heads.</a>
   <div class="span pull-right"> <span class="go-top"><i class="icon-arrow-up"></i></span> </div>
 </div>
 <!-- END FOOTER --> 
