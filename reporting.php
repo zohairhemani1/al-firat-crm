@@ -246,7 +246,7 @@ include 'headers/menu-top-navigation.php';
 									
 				while($row = mysqli_fetch_array($result_main))
 					{
-$user_name = $row['user_name'];
+					$user_name = $row['user_name'];
 					$email = $row['email'];
 					$location = $row['location'];
 					$user_id = $row['user_id'];
@@ -264,7 +264,7 @@ $user_name = $row['user_name'];
 					case 1:
 						$status = "Fixed";
 						break;
-					case 2:
+					case -1:
 						$status = "Expired";
 						break;
 					}
@@ -276,52 +276,33 @@ $user_name = $row['user_name'];
 							<td class='hidden-phone'>${lastUpdated} - ${employeeName}</td>
 							<td style='width:26%;'>${status}</td>
 							<td style='width:9%;'>
-								<a href='register_form.php?customerID=$user_id' class='btn mini black'><i class='icon-edit'></i> Update</a></td>
-						
-					
-								
-				</tr>			";
-				}
-					
-					echo"
-
-                                </tbody>
+								<a href='register_form.php?customerID=$user_id' class='btn mini black'><i class='icon-edit'></i> Update</a></td>			
+						</tr>";
+					}
+				} ?>
+					</tbody>
                         </table>
 			
 					</div>
 					     </div>
-	<div class='form-actions clearfix'> 
-	<center>
-            	<div id=''>
-			
-				<form method='post' action='downloadCSV.php?type=email&query={$query_main}>
-					<input	class='btn btn-success button-submit' type='submit' value='DOWNLOAD EMAIL AS .CSV' />
-				</form>
-            </div> 
-    	<div id=''>
-
-				<form method='post' action='downloadCSV.php?type=phone&query={$query_main}'>
-					<input id='reporting_submit' class='tn btn-success button-submit' type='submit' value='DOWNLOAD PHONE# AS .CSV'/>
-				</form>
-		</center>
-			
-			</div>
 
 			
 						
                
                     <!-- END EXAMPLE TABLE widget-->
-            ";
-				
-			}
-			else
-			{
-
-			}
-    ?>
 		
         </div>
             </div>
+			
+			<div id="reportButtons">
+			
+				<form method="post" action="downloadCSV.php?type=email&query=<?php echo $query_main; ?>">
+					<input class = 'btn btn-success button-submit' type="submit" value="DOWNLOAD EMAIL AS .CSV" />
+				</form>
+				<form method="post" action="downloadCSV.php?type=phone&query=<?php echo $query_main; ?>">
+					<input type="submit" class='btn btn-success button-submit' value="DOWNLOAD PHONE NUMBER AS .CSV" />
+				</form>
+			</div>
 			
 			<!-- END ADVANCED TABLE widget-->
 
