@@ -272,7 +272,27 @@ include 'headers/menu-top-navigation.php';
                       <button onclick="addInput()" type="button" class="btn green"> Add New <i class="icon-plus"></i> </button>
                     </div>
                     
-                    
+                    <div class='control-group'>
+                              <div class='controls'>
+                                 <label class='radio'>
+                                 <input type='radio' name='optionsRadios1' value='option1' />
+                                 Option 1
+                                 </label>
+                                 <label class='radio'>
+                                 <input type='radio' name='optionsRadios1' value='option2' checked />
+                                 Option 2
+                                 </label>  
+                                 <label class='radio'>
+                                 <input type='radio' name='optionsRadios1' value='option2' />
+                                 Option 3
+                                 </label> 
+								<label class='radio'>
+                                 <?php echo $_username ;?>
+                                 </label> <label class='radio'>
+                                 22015-02-24 07:54:30
+                                 </label> 
+                              </div>
+                           </div>
                     <?php 
 					
 						if(isset($_GET['customerID']))
@@ -304,10 +324,17 @@ include 'headers/menu-top-navigation.php';
 									  <div class='controls'>
 										<textarea required name='description[{$counter}]' id='inputDescription' class='span6 ' rows='3'>{$description}
 										</textarea>
-									  </div>
+										
+                          
+ 										</div>
 									</div>
+									
 									<input type='text' name='queryID[{$counter}]' value='{$query_id}' style='display:none;'  />
-									";
+									                                 <label class='radio'>
+                                 <input type='radio' name='optionsRadios1' value='option1' />
+                              
+									"
+									;
 							
 							$counter++;
 							}
