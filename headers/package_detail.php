@@ -6,9 +6,6 @@
 		{
 			$package_name = $row_package['package_name'];
 			$package_id = $row_package['package_id'];
-			echo "
-			<option class='customer_serach' value=''></option>
-			<option value={$package_id}>{$package_name}</option>";
+			echo "<option value={$package_id}>{$package_name}</option>";
 		}
-		//echo '<option value="2">Testing</option>';
 ?>
