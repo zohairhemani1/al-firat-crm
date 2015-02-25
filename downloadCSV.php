@@ -4,6 +4,7 @@
 include 'headers/connect_to_mysql.php'; 
 
 $query = $_GET['query'];
+
 if($_GET['type']=="email")
 {
 	echo "EMAILS:\n";

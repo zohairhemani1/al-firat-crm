@@ -10,9 +10,14 @@
 		$packageID = $_POST['package'];
 		$employeeID = $_POST['employee'];
 		
+		
+		
+		
+		
+		
 		$query_main = "SELECT *,q.`time_stamp` as lastUpdated, f.`email` as customerEmail FROM `form` f,`package` p, `query` q,`login` l where f.`user_id` = q.`user_id` AND q.`package_id` = p.`package_id` AND l.emp_id = q.emp_id";
 		
-		if(isset($packageID))
+		if(isset($packageID) AND $packageID!="all" AND $packageID!="")
 		{
 			$query_main.= " AND p.`package_id` = '{$packageID}'";
 		}
@@ -25,7 +30,7 @@
 			$query_main.=" AND (DATE_FORMAT(date(f.`time_stamp`),'%m/%d/%Y') between '{$dateFrom}' AND '{$dateTo}')";
 		}
 		
-		if(isset($employeeID))
+		if(isset($employeeID) AND $employeeID!="all" AND $employeeID!="" )
 		{
 			//echo "empID: " . $employeeID;
 			$query_main.=" AND l.`emp_id` = '{$employeeID}'";
@@ -163,8 +168,9 @@ include 'headers/menu-top-navigation.php';
                         <div class="control-group" id="package_drop">
                               <label class="control-label">Packages</label>
                               <div class="controls">
-                                  <select id="_dropdown" class="span6 chosen" data-placeholder="Choose a Category" tabindex="1" name="package">
+                                  <select id="_dropdown" class="span6 chosen" data-placeholder="Choose a Package" tabindex="1" name="package">
 									<option class="customer_serach" value=""></option>
+									<option value="all">ALL</option>
 									<?php include "headers/package_detail.php"; ?>
                                  </select>
                               </div>
@@ -172,8 +178,9 @@ include 'headers/menu-top-navigation.php';
 						<div class="control-group" id="_customer">
                               <label class="control-label">Employees</label>
                               <div class="controls">
-                                  <select id="dropdown" class="span6 chosen" data-placeholder="Choose a Category" tabindex="1" name="employee">
+                                  <select id="dropdown" class="span6 chosen" data-placeholder="Choose an Employee" tabindex="1" name="employee">
 									<option class="customer_serach" value=""></option>
+									<option value="all">ALL</option>
 									<?php include "headers/employee_detail.php"; ?>
                                     
                                  </select>
@@ -270,16 +277,16 @@ $user_name = $row['user_name'];
 					     </div>
 	<div class='form-actions clearfix'> 
 	<center>
-            	<div id='reportButtons'>
+            	<div id=''>
 			
 				<form method='post' action='downloadCSV.php?type=email&query={$query_main}>
 					<input	class='btn btn-success button-submit' type='submit' value='DOWNLOAD EMAIL AS .CSV' />
 				</form>
             </div> 
-    	<div id='reportButton2'>
+    	<div id=''>
 
 				<form method='post' action='downloadCSV.php?type=phone&query={$query_main}'>
-					<input id='reporting_submit'	class='tn btn-success button-submit' type='submit' value='DOWNLOAD PHONE 000BER AS .CSV'/>
+					<input id='reporting_submit' class='tn btn-success button-submit' type='submit' value='DOWNLOAD PHONE# AS .CSV'/>
 				</form>
 		</center>
 			
