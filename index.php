@@ -79,22 +79,24 @@ include 'headers/menu-top-navigation.php';
             </div>           <!-- END PAGE HEADER-->
 
             <!-- BEGIN ADVANCED TABLE widget-->
-            <?php 
-		if($_GET['insert'] == 'true'){
-      echo"
-	    <div class='alert alert-success'>
-                <button class='close' data-dismiss='alert'>×</button>
-                <strong>Success!</strong> The package has been added.
-            </div>";
-		}
-	 	else if($_GET['update'] == 'true'){
+            <?php
+			
+			if(isset($_GET['insert']) == 'true')
+			{
+				echo"
+			<div class='alert alert-success'>
+					<button class='close' data-dismiss='alert'>×</button>
+					<strong>Success!</strong> The package has been added.
+				</div>";
+			}
+	 	else if(isset($_GET['update']) == 'true'){
       echo"
 	    <div class='alert alert-success'>
                 <button class='close' data-dismiss='alert'>×</button>
                 <strong>Success!</strong> The package has been updated.
             </div>";
 		}
-		else if($_GET['delete'] == 'true'){
+		else if(isset($_GET['delete']) == 'true'){
       echo"
 	    <div class='alert alert-success'>
                 <button class='close' data-dismiss='alert'>×</button>

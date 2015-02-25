@@ -27,7 +27,7 @@
 		
 		if(isset($employeeID))
 		{
-			echo "empID: " . $employeeID;
+			//echo "empID: " . $employeeID;
 			$query_main.=" AND l.`emp_id` = '{$employeeID}'";
 		}
 		echo $query_main;
