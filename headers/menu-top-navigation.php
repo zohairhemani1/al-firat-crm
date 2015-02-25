@@ -115,9 +115,7 @@ echo"
                       <span class='arrow'></span>
                   </a>
                   <ul class='sub'>
-                      <li><a class='' href='package_.php'>Reporting </a></li>
-                      <li><a class='' href='insert_package.php'>Insert Reporting</a></li>
-                      
+                      <li><a class='' href='reporting.php'>Reporting </a></li>                      
                   </ul>
               </li>
 
