@@ -254,12 +254,27 @@ $user_name = $row['user_name'];
 					$lastUpdated = $row['lastUpdated'];
 					$employeeName = $row['user'];
 					$employeeName = strtoupper($employeeName);
+					$status = $row['status'];
+					
+					switch ($status) 
+					{
+					case 0:
+						$status = "Unfixed";
+						break;
+					case 1:
+						$status = "Fixed";
+						break;
+					case 2:
+						$status = "Expired";
+						break;
+					}
+					
 					echo"<tr class='odd gradeX'>
 							<td class='hidden-phone'>${user_id}</td>
 							<td class='hidden-phone'>${user_name}</td>
 							<td class='hidden-phone'>${package_name}</td>
 							<td class='hidden-phone'>${lastUpdated} - ${employeeName}</td>
-							<td style='width:26%;'>0</td>
+							<td style='width:26%;'>${status}</td>
 							<td style='width:9%;'>
 								<a href='register_form.php?customerID=$user_id' class='btn mini black'><i class='icon-edit'></i> Update</a></td>
 						
