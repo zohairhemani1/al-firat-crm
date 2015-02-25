@@ -293,7 +293,8 @@ include 'headers/menu-top-navigation.php';
 								echo "<div class='control-group'>
 										  <label class='control-label'>Packages</label>
 										  <div class='controls'>
-											<select id='' name='packageID[{$counter}]' class='' data-placeholder='Choose a Category' tabindex='1'>
+										   <option class='customer_serach' value=''></option>
+											<select name='packageID[{$counter}]' class='span6 chosen' data-placeholder='Choose a Category' tabindex='1'>
 											<option value='{$package_id}'>{$package_name}</option>
 												
 											</select>

@@ -3033,6 +3033,7 @@ div.tagsinput .not_valid {
 .dataTables_paginate,
 .dataTables_filter {
     float: right;
+	margin-right: -225px;
 }
 
 
@@ -3673,6 +3674,7 @@ ul.amounts li {
 
 .m-wrap.small {
     width: 160px !important;
+	height:auto;
 }
 
 .news h1 {
@@ -3889,7 +3891,7 @@ h3
 }
 #date_range {
     float: left;
-    width: 36%;
+    width: 32%;
 }
 #_dropdown_chzn {
     width: 11.4% !important;
@@ -3901,12 +3903,12 @@ h3
 #package_drop {
     width: 26%;
 	float: left;
-	margin-left: 7%;
+	
 }
 #_customer {
     width: 26%;
 	float: left;
-	margin-left: 1%;
+	margin-left: 6%;
 	margin-top: -1px;
 }
 #employe_input {
@@ -3916,4 +3918,24 @@ h3
 }
 #text_field {
     margin-top: 8px;
+}
+#widget_height{
+	height: 161px !important;
+}
+#repoting_button {
+position: relative;
+margin-top: 84px;
+}
+#reportButton2 {
+position: absolute;
+float: right;
+top: 802px;
+left: 0px;
+right:0px;
+}
+#reporting_submit{
+	height:30px;
+}
+#reportButtons {
+margin-left: 285px;
 }

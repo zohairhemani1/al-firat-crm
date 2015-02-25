@@ -140,8 +140,16 @@ include 'headers/menu-top-navigation.php';
             <div class="row-fluid">
                 <div class="span12">
             <!-- BEGIN Serach TABLE widget-->
-			
+					<div class="widget">
+                        <div class="widget-title">
+                            <h4><i class="icon-reorder"></i>Search Table</h4>
+                            
+                        </div>
+                        <div id="widget_height"  class="widget-body">
+                            <div class="portlet-body">
 			<form action="reporting.php" method="post">
+
+    	
 			
             <div class="control-group" id="date_range">
             <label class="control-label">Date Range</label>
@@ -155,24 +163,29 @@ include 'headers/menu-top-navigation.php';
                         <div class="control-group" id="package_drop">
                               <label class="control-label">Packages</label>
                               <div class="controls">
-                                  <select id="dropdown" class="" data-placeholder="Choose a Category" tabindex="1" name="package">
+                                  <select id="_dropdown" class="span6 chosen" data-placeholder="Choose a Category" tabindex="1" name="package">
+									<option class="customer_serach" value=""></option>
 									<?php include "headers/package_detail.php"; ?>
                                  </select>
                               </div>
                         </div>
-						<div class="control-group" id="package_drop">
+						<div class="control-group" id="_customer">
                               <label class="control-label">Employees</label>
                               <div class="controls">
-                                  <select id="dropdown" class="" data-placeholder="Choose a Category" tabindex="1" name="employee">
+                                  <select id="dropdown" class="span6 chosen" data-placeholder="Choose a Category" tabindex="1" name="employee">
+									<option class="customer_serach" value=""></option>
 									<?php include "headers/employee_detail.php"; ?>
+                                    
                                  </select>
                               </div>
-                        </div>
+                        </div><br>
                         
-						<input type="submit" value="SUBMIT" />
-			
+						
+			        <div id="repoting_button" class="form-actions clearfix">         
+                  <input type="submit" value="SUBMIT" class="btn btn-success button-submit" />
+                </div>
 			</form> 
-
+            </div></div></div>
                <!--          <div class="control-group" id="_customer">
                               <label class="control-label">Custom Dropdown</label>
                               <div class="controls">
@@ -188,35 +201,45 @@ include 'headers/menu-top-navigation.php';
  
 
 	                    <!-- BEGIN EXAMPLE TABLE widget-->
-                    <div class="widget">
-                        <div class="widget-title">
-                            <h4><i class="icon-reorder"></i>Managed Table</h4>
-                            <span class="tools">
-                                <a href="javascript:;" class="icon-chevron-down"></a>
-                                <a href="javascript:;" class="icon-remove"></a>
+                    
+                                    
+                                  
+    <?php
+
+			if($posted==1)
+			{
+	echo"
+	<!--table Widget start here-->
+	<div class='widget'>
+                        <div class='widget-title'>
+                            <h4><i class='icon-reorder'></i>Managed Table</h4>
+                            <span class='tools'>
+                                <a href='javascript:;' class='icon-chevron-down'></a>
+                                <a href='javascript:;' class='icon-remove'></a>
                             </span>
                         </div>
-                        <div class="widget-body">
-                            <div class="portlet-body">
+                        <div class='widget-body'>
+                            <div class='portlet-body'>
                                 
-                                <div class="space15"></div>
-                                <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
+                                <div class='space15'></div>
+                                <table class='table table-striped table-hover table-bordered' id='sample_editable_1'>
                                     <thead>
                                     <tr>
-                                        <th style="width:5px;">id</th>
+                                        <th style='width:5px;'>id</th>
                                         <th>Username</th>
                                         <th>Package Name</th>
                                         <th>Last Updated</th>
                                         <th>Status</th>
-                                    </tr>
-                                    
-                                  
-    <?php
-			if($posted==1)
-			{
+                                        <th>Action</th>
+                    
+					</tr>
+					<!--fetching array value-->
+					";
+									
+									
 				while($row = mysqli_fetch_array($result_main))
 					{
-					$user_name = $row['user_name'];
+$user_name = $row['user_name'];
 					$email = $row['email'];
 					$location = $row['location'];
 					$user_id = $row['user_id'];
@@ -230,43 +253,55 @@ include 'headers/menu-top-navigation.php';
 							<td class='hidden-phone'>${package_name}</td>
 							<td class='hidden-phone'>${lastUpdated} - ${employeeName}</td>
 							<td style='width:26%;'>0</td>
-						</tr>";
-					}
+							<td style='width:9%;'>
+								<a href='register_form.php?customerID=$user_id' class='btn mini black'><i class='icon-edit'></i> Update</a></td>
+						
+					
+								
+				</tr>			";
+				}
+					
+					echo"
+
+                                </tbody>
+                        </table>
+			
+					</div>
+					     </div>
+	<div class='form-actions clearfix'> 
+	<center>
+            	<div id='reportButtons'>
+			
+				<form method='post' action='downloadCSV.php?type=email&query={$query_main}>
+					<input	class='btn btn-success button-submit' type='submit' value='DOWNLOAD EMAIL AS .CSV' />
+				</form>
+            </div> 
+    	<div id='reportButton2'>
+
+				<form method='post' action='downloadCSV.php?type=phone&query={$query_main}'>
+					<input id='reporting_submit'	class='tn btn-success button-submit' type='submit' value='DOWNLOAD PHONE 000BER AS .CSV'/>
+				</form>
+		</center>
+			
+			</div>
+
+			
+						
+               
+                    <!-- END EXAMPLE TABLE widget-->
+            ";
+				
 			}
 			else
 			{
-				echo "NO DATA!";
+
 			}
     ?>
 		
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                
-                                </tbody>
-                        </table>
-                        </div>
-                    </div>
-                    <!-- END EXAMPLE TABLE widget-->
-                </div>
+        </div>
             </div>
 			
-			
-			
-			<div id="reportButtons">
-			
-				<form method="post" action="downloadCSV.php?type=email&query=<?php echo $query_main; ?>">
-					<input type="submit" value="DOWNLOAD EMAIL AS .CSV" />
-				</form>
-				<form method="post" action="downloadCSV.php?type=phone&query=<?php echo $query_main; ?>">
-					<input type="submit" value="DOWNLOAD PHONE NUMBER AS .CSV" />
-				</form>
-			</div>
-			
-			
-			
-            <!-- END ADVANCED TABLE widget-->
+			<!-- END ADVANCED TABLE widget-->
 
             <!-- END PAGE CONTENT-->
          </div>
