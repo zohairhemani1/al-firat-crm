@@ -10,6 +10,7 @@
 		$result_detail = mysqli_query($con,$query_detail);
 		$row_userdetail = mysqli_fetch_array($result_detail);
 		$_username = $row_userdetail['user'];
+		$_username = strtoupper($_username);
 		$_email = $row_userdetail['email'];
 		
 		
