@@ -145,7 +145,7 @@ include 'headers/menu-top-navigation.php';
 </div>
 <!-- END CONTAINER --> 
 <!-- BEGIN FOOTER -->
-<div id="footer"> 2015 &copy; Digital Egg Heads. </div>
+<div id="footer"> 2015 &copy; Digital EggHeads. </div>
 <!-- END FOOTER --> 
 <!-- BEGIN JAVASCRIPTS --> 
 <!-- Load javascripts at bottom, this will reduce page load time --> 

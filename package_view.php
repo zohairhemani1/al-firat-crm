@@ -153,7 +153,7 @@ include 'headers/menu-top-navigation.php';
    <!-- END CONTAINER -->
    <!-- BEGIN FOOTER -->
    <div id="footer">
-       2015 &copy; Digital Egg Heads.
+       2015 &copy; Digital EggHeads.
       <div class="span pull-right">
          <span class="go-top"><i class="icon-arrow-up"></i></span>
       </div>
