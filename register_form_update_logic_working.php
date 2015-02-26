@@ -111,9 +111,6 @@
 				}
 			} // ENDING ELSE OF ISSET()
 			
-			if ($nobile == null){
-			
-			}
 		} // IF Post ends here.
 	
 	else
@@ -236,11 +233,7 @@ include 'headers/menu-top-navigation.php';
                 <div id="bar" class="progress progress-striped">
                   <div class="bar"></div>
                 </div>
-				<?php 
-			if ($email == null)
-				('Location:index.php');
-			?>
-		  <div class="tab-content">
+                <div class="tab-content">
                   <div class="tab-pane active" id="tab1">
                     <h3 class="page-title">Fill up step 1</h3>
                     <div class="control-group">
@@ -270,7 +263,7 @@ include 'headers/menu-top-navigation.php';
                     <div class="control-group">
                       <label class="control-label">Mobile 1</label>
                       <div class="controls">
-                        <input required id="phone" name="mobile" class="span6" type="text" placeholder="Enter your mobile no" value="<?php echo $mobile; ?>">
+                        <input required id="inputMobile" name="mobile" class="span6" type="text" placeholder="Enter your mobile no" value="<?php echo $mobile; ?>">
                         <span class="help-inline"></span> </div>
                     </div>
                     <div class="control-group">
@@ -410,7 +403,6 @@ include 'headers/menu-top-navigation.php';
 								  </div>
 					
 					";
-					$counter++;
 						}
 					
 					?>
@@ -473,11 +465,14 @@ include 'headers/menu-top-navigation.php';
                   </div>
                   
                 </div>
-
-                <div class="form-actions clearfix"> <a href="javascript:;" class="btn button-previous"> <i class="icon-angle-left"></i> Back </a>  <button id="continueButton" onclick="return validate()" class="btn btn-primary blue button-next" type="button" class="" >Continue <i class="icon-angle-right"></button></i>  
-                  <!-- <a href="" id="submitThis" class="btn btn-success button-submit" onClick="document.getElementById("myForm").submit();" >-->
-
-				<input type="submit"  class="btn btn-success button-submit" />
+                <div class="form-actions clearfix"> <a href="javascript:;" class="btn button-previous"> <i class="icon-angle-left"></i> Back </a> <a href="javascript:;" class="btn btn-primary blue button-next"> Continue <i class="icon-angle-right"></i> </a> 
+                  <!-- <a href="" id="submitThis" class="btn btn-success button-submit" onClick="document.getElementById("myForm").submit();" >
+                                 Submit <i class="icon-ok"></i> -->
+                  
+                  
+                  
+                  
+                  <input type="submit" class="btn btn-success button-submit" />
                 </div>
               </div>
             </form>
@@ -493,7 +488,7 @@ include 'headers/menu-top-navigation.php';
 </div>
 <!-- END CONTAINER --> 
 <!-- BEGIN FOOTER -->
-<div id="footer"> <a href ="http://www.digitaleggheads.com">2014-15 &copy; Digital egg heads</a>
+<div id="footer"> <a href ="https://www.facebook.com/avialdo.inc">2014-15 &copy; Avialdo.</a>
   <div class="span pull-right"> <span class="go-top"><i class="icon-arrow-up"></i></span> </div>
 </div>
 <!-- END FOOTER --> 
@@ -570,23 +565,7 @@ document.getElementById("inputDescription").onchange = function () {
     document.getElementById("showDescription").value = this.value;
 };
 </script> 
-
-	<script>
-		function validate()
-	{
-    //form validation
-    var phone=document.getElementById('phone');
-     if (phone.value == null || phone.value==""){
-       phone.style.border="2px solid red";
-     }
-	else{
-		  //var myvar = <?php echo json_encode($blue  = "blue button-next"); ?>;
-		  //alert(myvar);
-		  //$("#continueButton").addClass(myvar);
-
-	}
-	 }
-	 
+<script>
 </script> 
 <script>
 
@@ -598,11 +577,10 @@ document.getElementById("inputDescription").onchange = function () {
 <script>
 var countBox =1;
 var counter = '<?php echo $counter; ?>';
-alert(counter);
 function addInput()
 {
-	 
-	 alert(counter);
+	 counter++;
+	 //alert(counter);
      var boxName="textBox"+countBox;	
 		
 		document.getElementById('response').innerHTML+='<div class="control-group">\
@@ -639,7 +617,6 @@ function addInput()
 					<label class="user_name"><?php echo $_username;?></label></div></div>';
 		
      countBox += 1;
-	 counter++;
 }
 </script> 
 

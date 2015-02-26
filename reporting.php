@@ -315,7 +315,7 @@ include 'headers/menu-top-navigation.php';
    <!-- END CONTAINER -->
    <!-- BEGIN FOOTER -->
    <div id="footer">
-       2015 &copy; Digital Egg Heads
+ <a href ="http://www.digitaleggheads.com/">2014-15 &copy; Digital Eggheads.</a>
       <div class="span pull-right">
          <span class="go-top" style="width:16px; float:right;"><i class="icon-arrow-up"></i></span>
       </div>

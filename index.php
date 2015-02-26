@@ -170,8 +170,7 @@ include 'headers/menu-top-navigation.php';
    <!-- END CONTAINER -->
    <!-- BEGIN FOOTER -->
    <div id="footer">
-       2013 &copy; Admin Lab Dashboard.
-      <div class="span pull-right">
+     <a href ="http://www.digitaleggheads.com/">2014-15 &copy; Digital Eggheads.</a>      <div class="span pull-right">
          <span class="go-top"><i class="icon-arrow-up"></i></span>
       </div>
    </div>

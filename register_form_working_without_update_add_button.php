@@ -29,6 +29,7 @@
 		$packageID = $_POST['packageID'];
 		$description = $_POST['description'];
 		$queryID = $_POST['queryID']; // hidden field
+		$optionsRadios = $_POST['optionsRadios'];
 		
 		if(isset($_GET['customerID']))
 		{
@@ -42,7 +43,7 @@
 			{
 			
 				$query = "UPDATE `query` set `package_id` = '$packageID[$i]', `time_stamp` = now(), `description` = '$description[$i]', 
-							`emp_id` = '$emp_id' WHERE `id` = '$queryID[$i]'";
+							`emp_id` = '$emp_id',`status` = '$optionsRadios[$i]' WHERE `id` = '$queryID[$i]'";
 				$result = mysqli_query($con,$query) or die("ERROR!");
 			}
 			
@@ -86,8 +87,8 @@
 						echo "<br/>";
 						echo "DESCRIPTION: " . $descriptionArray[$i];*/
 						
-						$query = "INSERT into query(`user_id`,`emp_id`,`package_id`,`time_stamp`,`description`)
-								VALUES ('$user_id','$emp_id','$packageIDArray[$i]',now(),'$descriptionArray[$i]')";
+						$query = "INSERT into query(`user_id`,`emp_id`,`package_id`,`time_stamp`,`description`,`status`)
+								VALUES ('$user_id','$emp_id','$packageIDArray[$i]',now(),'$descriptionArray[$i]','$optionsRadios[$i]')";
 						$result = mysqli_query($con,$query);
 						
 					}
@@ -225,7 +226,7 @@ include 'headers/menu-top-navigation.php';
                       <label class="control-label">Username</label>
                       <div class="controls">
                         <div class="input-icon left"> <i class="icon-user"></i>
-                          <input required name="user_name" id="inputUser" type="text" class="span6" value="<?php echo $user_name; ?>" />
+                          <input required name="user_name" id="inputUser" placeholder="Enter your name" type="text" class="span6" value="<?php echo $user_name; ?>" />
                           <span class="help-inline"></span> </div>
                       </div>
                     </div>
@@ -233,7 +234,7 @@ include 'headers/menu-top-navigation.php';
                       <label class="control-label">Email</label>
                       <div class="controls">
                         <div class="input-icon left"> <i class="icon-envelope"></i>
-                          <input required id="inputEmail" name="email" type="text" class="span6" value="<?php echo $email; ?>" />
+                          <input required id="inputEmail" name="email" placeholder="Enter your email" type="text" class="span6" value="<?php echo $email; ?>" />
                           <span class="help-inline"></span> </div>
                       </div>
                     </div>
@@ -241,27 +242,27 @@ include 'headers/menu-top-navigation.php';
                       <label class="control-label">Location</label>
                       <div class="controls">
                         <div class="input-icon left"> <i class="icon-map-marker"></i>
-                          <input required id="inputLocation" name="location" type="text" class="span6" value="<?php echo $location;?>" />
+                          <input required id="inputLocation" name="location" placeholder="Enter your location" type="text" class="span6" value="<?php echo $location;?>" />
                           <span class="help-inline"></span> </div>
                       </div>
                     </div>
                     <div class="control-group">
                       <label class="control-label">Mobile 1</label>
                       <div class="controls">
-                        <input required id="inputMobile" name="mobile" class="span5" type="text" data-mask="9999-99-99-999" placeholder="" value="<?php echo $mobile; ?>">
+                        <input required id="inputMobile" name="mobile" class="span6" type="text" placeholder="Enter your mobile no" value="<?php echo $mobile; ?>">
                         <span class="help-inline"></span> </div>
                     </div>
                     <div class="control-group">
                       <label class="control-label">Mobile 2</label>
                       <div class="controls">
-                        <input id="inputMobile1" name="mobile_other" class="span5" type="text" data-mask="9999-99-99-999" placeholder="" value="<?php echo $mobile_other; ?>"                                       >
+                        <input id="inputMobile1" name="mobile_other" class="span6" type="text" placeholder="Enter your mobile no (optional)" value="<?php echo $mobile_other; ?>"                                       >
                         <span class="help-inline"></span> </div>
                     </div>
                     <div class="control-group">
                       <label class="control-label">Tele #</label>
                       <div class="controls">
                         <div class="input-icon left"> <i class="icon-book"></i>
-                          <input required id="inputTele" name="tele" class="span5" type="text" data-mask="999-99999999" placeholder="" value="<?php echo $tele; ?>" />
+                          <input required id="inputTele" name="tele" class="span6" type="text" placeholder="Enter your tele no" value="<?php echo $tele; ?>" />
                           <span class="help-inline"></span> </div>
                       </div>
                     </div>
@@ -269,7 +270,13 @@ include 'headers/menu-top-navigation.php';
                   <div class="tab-pane" id="tab2">
                     <h3 class="page-title">Fill up step 2</h3>
                     <div class="btn-group">
-                      <button onclick="addInput()" type="button" class="btn green"> Add New <i class="icon-plus"></i> </button>
+					<?php
+						if(!isset($_GET['customerID']))
+						{
+							echo "<button onclick='addInput()' type='button' class='btn green'> Add New <i class='icon-plus'></i> </button>";
+						}
+					?>
+                      
                     </div>
                     
                     
@@ -285,16 +292,18 @@ include 'headers/menu-top-navigation.php';
 							
 							while($row = mysqli_fetch_assoc($result))
 							{
+								
 								$description = $row['description'];
 								$package_name = $row['package_name'];
 								$package_id = $row['package_id'];
 								$query_id = $row['id'];
+								$timestamp = $row['time_stamp'];
+								$status = $row['status'];
 								
 								echo "<div class='control-group'>
 										  <label class='control-label'>Packages</label>
 										  <div class='controls'>
-										   <option class='customer_serach' value=''></option>
-											<select name='packageID[{$counter}]' class='span6 chosen' data-placeholder='Choose a Category' tabindex='1'>
+											<select id='' name='packageID[{$counter}]' class='' data-placeholder='Choose a Category' tabindex='1'>
 											<option value='{$package_id}'>{$package_name}</option>
 												
 											</select>
@@ -305,10 +314,40 @@ include 'headers/menu-top-navigation.php';
 									  <div class='controls'>
 										<textarea required name='description[{$counter}]' id='inputDescription' class='span6 ' rows='3'>{$description}
 										</textarea>
-									  </div>
+										
+                          
+ 										</div>
 									</div>
+									
 									<input type='text' name='queryID[{$counter}]' value='{$query_id}' style='display:none;'  />
-									";
+									                                 
+                                 <div class='control-group'>
+									  <div class='controls'>
+										 <label class='radio'>
+										 <input type='radio' name='optionsRadios[{$counter}]' value='1'"; if($status == 1){echo " checked ";}
+										 echo " />
+										 Fixed
+										 </label>
+										 <label class='radio'>
+										 <input type='radio' name='optionsRadios[{$counter}]' value='0'";  if($status == 0){echo " checked ";}
+										 echo " />
+										 Unfixed
+										 </label>  
+										 <label class='radio'>
+										 <input type='radio' name='optionsRadios[{$counter}]' value='-1'"; if($status == -1){echo " checked ";} 
+										 echo " />
+										 Expired
+										 </label> 
+										<label class='user_name'>
+											{$_username}
+										 </label> <label class='radio'>
+										 {$timestamp}
+										 </label> 
+									  </div>
+								  </div>
+                              
+									"
+									;
 							
 							$counter++;
 							}
@@ -330,7 +369,29 @@ include 'headers/menu-top-navigation.php';
                       <div class='controls'>
                         <textarea required name='description[0]' id='inputDescription' class='span6 ' rows='3'></textarea>
                       </div>
-                    </div>";
+                    </div>
+					
+					<div class='control-group'>
+									  <div class='controls'>
+										 <label class='radio'>
+										 <input type='radio' name='optionsRadios[{$counter}]' value='1' />
+										 Fixed
+										 </label>
+										 <label class='radio'>
+										 <input type='radio' name='optionsRadios[{$counter}]' value='0' />
+										 Unfixed
+										 </label>  
+										 <label class='radio'>
+										 <input type='radio' name='optionsRadios[{$counter}]' value='-1' />
+										 Expired
+										 </label> 
+										<label>
+											{$_username}
+										</label>
+									  </div>
+								  </div>
+					
+					";
 						}
 					
 					?>
@@ -416,7 +477,7 @@ include 'headers/menu-top-navigation.php';
 </div>
 <!-- END CONTAINER --> 
 <!-- BEGIN FOOTER -->
-<div id="footer"> <a href ="https://www.facebook.com/avialdo.inc">2014-15 &copy; Avialdo.</a>
+<div id="footer"> <a href ="http://www.digitaleggheads.com/">2014-15 &copy; Digital Eggheads.</a>
   <div class="span pull-right"> <span class="go-top"><i class="icon-arrow-up"></i></span> </div>
 </div>
 <!-- END FOOTER --> 

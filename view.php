@@ -201,7 +201,7 @@ include 'headers/menu-top-navigation.php';
 </div>
 <!-- END CONTAINER --> 
 <!-- BEGIN FOOTER -->
-<div id="footer"> <a href ="https://www.facebook.com/avialdo.inc">2014-15 &copy; Digital Egg Heads.</a>
+<div id="footer"> <a href ="http://www.digitaleggheads.com/">2014-15 &copy; Digital Egg Heads.</a>
   <div class="span pull-right"> <span class="go-top"><i class="icon-arrow-up"></i></span> </div>
 </div>
 <!-- END FOOTER --> 

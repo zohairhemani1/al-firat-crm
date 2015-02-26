@@ -110,7 +110,7 @@
 </div>
 <!-- END LOGIN --> 
 <!-- BEGIN COPYRIGHT -->
-<div id="login-copyright"> <a href ="https://www.facebook.com/avialdo.inc">2014-15 &copy; Avialdo.</a> </div>
+<div id="login-copyright"> <a href ="http://www.digitaleggheads.com/">2014-15 &copy; Digital Eggheads.</a> </div>
 <!-- END COPYRIGHT --> 
 <!-- js placed at the end of the document so the pages load faster --> 
 <script src="script/jquery-1.8.3.min.js"></script> 
