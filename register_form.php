@@ -598,11 +598,11 @@ document.getElementById("inputDescription").onchange = function () {
 <script>
 var countBox =1;
 var counter = '<?php echo $counter; ?>';
-alert(counter);
+//alert(counter);
 function addInput()
 {
 	 
-	 alert(counter);
+	// alert(counter);
      var boxName="textBox"+countBox;	
 		
 		document.getElementById('response').innerHTML+='<div class="control-group">\
