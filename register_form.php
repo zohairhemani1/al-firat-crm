@@ -226,7 +226,7 @@ include 'headers/menu-top-navigation.php';
                       <label class="control-label">Username</label>
                       <div class="controls">
                         <div class="input-icon left"> <i class="icon-user"></i>
-                          <input required name="user_name" id="inputUser" type="text" class="span6" value="<?php echo $user_name; ?>" />
+                          <input required name="user_name" id="inputUser" placeholder="Enter your name" type="text" class="span6" value="<?php echo $user_name; ?>" />
                           <span class="help-inline"></span> </div>
                       </div>
                     </div>
@@ -234,7 +234,7 @@ include 'headers/menu-top-navigation.php';
                       <label class="control-label">Email</label>
                       <div class="controls">
                         <div class="input-icon left"> <i class="icon-envelope"></i>
-                          <input required id="inputEmail" name="email" type="text" class="span6" value="<?php echo $email; ?>" />
+                          <input required id="inputEmail" name="email" placeholder="Enter your email" type="text" class="span6" value="<?php echo $email; ?>" />
                           <span class="help-inline"></span> </div>
                       </div>
                     </div>
@@ -242,27 +242,27 @@ include 'headers/menu-top-navigation.php';
                       <label class="control-label">Location</label>
                       <div class="controls">
                         <div class="input-icon left"> <i class="icon-map-marker"></i>
-                          <input required id="inputLocation" name="location" type="text" class="span6" value="<?php echo $location;?>" />
+                          <input required id="inputLocation" name="location" placeholder="Enter your location" type="text" class="span6" value="<?php echo $location;?>" />
                           <span class="help-inline"></span> </div>
                       </div>
                     </div>
                     <div class="control-group">
                       <label class="control-label">Mobile 1</label>
                       <div class="controls">
-                        <input required id="inputMobile" name="mobile" class="span5" type="text" data-mask="9999-99-99-999" placeholder="" value="<?php echo $mobile; ?>">
+                        <input required id="inputMobile" name="mobile" class="span6" type="text" placeholder="Enter your mobile no" value="<?php echo $mobile; ?>">
                         <span class="help-inline"></span> </div>
                     </div>
                     <div class="control-group">
                       <label class="control-label">Mobile 2</label>
                       <div class="controls">
-                        <input id="inputMobile1" name="mobile_other" class="span5" type="text" data-mask="9999-99-99-999" placeholder="" value="<?php echo $mobile_other; ?>"                                       >
+                        <input id="inputMobile1" name="mobile_other" class="span6" type="text" placeholder="Enter your mobile no (optional)" value="<?php echo $mobile_other; ?>"                                       >
                         <span class="help-inline"></span> </div>
                     </div>
                     <div class="control-group">
                       <label class="control-label">Tele #</label>
                       <div class="controls">
                         <div class="input-icon left"> <i class="icon-book"></i>
-                          <input required id="inputTele" name="tele" class="span5" type="text" data-mask="999-99999999" placeholder="" value="<?php echo $tele; ?>" />
+                          <input required id="inputTele" name="tele" class="span6" type="text" placeholder="Enter your tele no" value="<?php echo $tele; ?>" />
                           <span class="help-inline"></span> </div>
                       </div>
                     </div>
@@ -338,7 +338,7 @@ include 'headers/menu-top-navigation.php';
 										 echo " />
 										 Expired
 										 </label> 
-										<label class='radio'>
+										<label class='user_name'>
 											{$_username}
 										 </label> <label class='radio'>
 										 {$timestamp}
