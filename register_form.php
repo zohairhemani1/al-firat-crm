@@ -34,7 +34,11 @@
 		
 		if(!isset($mobile) || $mobile == "" || empty($mobile))
 		{
-			$error = "PLEASE ENTER YOUR MOBILE NUMBER!";
+			$error = "	    <div class='alert alert-danger'>
+                <button class='close' data-dismiss='alert'>×</button>
+                <strong>Danger!</strong> You have to to write your mobile no on step 1 .
+            </div>";
+			
 		}
 		else
 		{
@@ -152,7 +156,7 @@
 
 <head>
 <meta charset="utf-8" />
-<title>Dashboard</title>
+<title>Registration</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 <meta content="" name="description" />
 <meta content="" name="author" />
@@ -222,9 +226,17 @@ include 'headers/menu-top-navigation.php';
     </div> -->
     <div class="row-fluid">
       <div class="span12">
+      <?php
+					 if($_POST){
+					 if(isset($error)){
+						echo $error;	
+					 }
+					 }
+					?>
+                    
         <div class="widget box blue" id="form_wizard_1">
           <div class="widget-title">
-            <h4> <i class="icon-reorder"></i> Form Wizard - <span class="step-title">Step 1 of 3</span> </h4>
+            <h4> <i class="icon-reorder"></i> Registration Form - <span class="step-title">Step 1 of 3</span> </h4>
             <span class="tools"> <a href="javascript:;" class="icon-chevron-down"></a> <a href="javascript:;" class="icon-remove"></a> </span> </div>
           <div class="widget-body form">
             <form action="register_form.php<?php echo $formAction; ?>" method="post" class="form-horizontal" id="myForm">
@@ -245,6 +257,7 @@ include 'headers/menu-top-navigation.php';
 			if ($email == null)
 				('Location:index.php');
 			?>
+            
 		  <div class="tab-content">
                   <div class="tab-pane active" id="tab1">
                     <h3 class="page-title">Fill up step 1</h3>
@@ -275,14 +288,19 @@ include 'headers/menu-top-navigation.php';
                     <div class="control-group">
                       <label class="control-label">Mobile 1</label>
                       <div class="controls">
+                      <div class="input-icon left"> <i class="icon-phone"></i>
                         <input id="phone" name="mobile" class="span6" type="text" placeholder="Enter your mobile no" value="<?php echo $mobile; ?>">
                         <span class="help-inline"></span> </div>
                     </div>
+                    </div>
                     <div class="control-group">
                       <label class="control-label">Mobile 2</label>
+                      
                       <div class="controls">
+                      <div class="input-icon left"> <i class="icon-phone"></i>
                         <input id="inputMobile1" name="mobile_other" class="span6" type="text" placeholder="Enter your mobile no (optional)" value="<?php echo $mobile_other; ?>"                                       >
                         <span class="help-inline"></span> </div>
+                    </div>
                     </div>
                     <div class="control-group">
                       <label class="control-label">Tele #</label>
@@ -297,7 +315,7 @@ include 'headers/menu-top-navigation.php';
                     <h3 class="page-title">Fill up step 2</h3>
                     <div class="btn-group">
 					
-							echo "<button onclick='addInput()' type='button' class='btn green'> Add New <i class='icon-plus'></i> </button>";
+							echo "<button onclick='addInput()' type='button' class='btn btn-primary'> Add New <i class='icon-plus'></i> </button>";
 					
                       
                     </div>
@@ -337,6 +355,7 @@ include 'headers/menu-top-navigation.php';
 									  <div class='controls'>
 										<textarea name='description[{$counter}]' id='inputDescription' class='span6 ' rows='3'>{$description}
 										</textarea>
+					
 										
                           
  										</div>
@@ -391,10 +410,17 @@ include 'headers/menu-top-navigation.php';
                       <label class='control-label'>Description</label>
                       <div class='controls'>
                         <textarea name='description[0]' id='inputDescription' class='span6 ' rows='3'></textarea>
-                      </div>
-                    </div>
+                      
 					
-					<div class='control-group'>
+																	  </div>
+                    <div class='employe'>
+					 <a href='#'class='name'>{$_username}</a>
+                                                <span class='datetime' {$display} /> ";?>  <?php if(isset($timestamp)){echo "at".$timestamp;}else{$display ="diplay:none";}?> <?php echo"</span>
+					</div>
+					</div>
+					
+					
+									<div class='control-group'>
 									  <div class='controls'>
 										 <label class='radio'>
 										 <input type='radio' name='optionsRadios[{$counter}]' value='1' />
@@ -408,10 +434,7 @@ include 'headers/menu-top-navigation.php';
 										 <input type='radio' name='optionsRadios[{$counter}]' value='-1' />
 										 Expired
 										 </label> 
-										<label>
-											{$_username}
-										</label>
-									  </div>
+										 </div>
 								  </div>
 					
 					";
@@ -424,7 +447,6 @@ include 'headers/menu-top-navigation.php';
                     <span id="response"></span> </div>
                   <div class="tab-pane" id="tab3">
                   	
-                    
                     
                     <!-- <h3 class="page-title">Finall Step</h3>
                     <div class="control-group">
@@ -481,7 +503,7 @@ include 'headers/menu-top-navigation.php';
 
                 <div class="form-actions clearfix"> <a href="javascript:;" class="btn button-previous"> <i class="icon-angle-left"></i> Back </a>  <button id="continueButton" class="btn btn-primary blue button-next" type="button" class="" >Continue <i class="icon-angle-right"></button></i>  
                   <!-- <a href="" id="submitThis" class="btn btn-success button-submit" onClick="document.getElementById("myForm").submit();" >-->
-
+					
 				<input type="submit"  class="btn btn-success button-submit" />
                 </div>
               </div>
@@ -628,7 +650,8 @@ function addInput()
                         <textarea name="description['+ counter +']" id="'+boxName+'" class="span6 " rows="3"></textarea>\
                       </div>\
                     </div>\
-					<div class="control-group"><div class="controls">\
+					<div class="control-group">\
+					<div class="controls">\
 						<label class="radio">\
 							<input type="radio" name="optionsRadios['+counter+']" value="1" />\
 							Fixed\
@@ -641,7 +664,7 @@ function addInput()
 							<input type="radio" name="optionsRadios['+counter+']" value="-1" />\
 							Expired\
 						</label>\
-					<label class="user_name"><?php echo $_username;?></label></div></div>';
+					</div></div>';
 		
      countBox += 1;
 	 counter++;
