@@ -273,7 +273,7 @@ include 'headers/menu-top-navigation.php';
 							<td class='hidden-phone'>${lastUpdated} - ${employeeName}</td>
 							<td style='width:26%;'>${status}</td>
 							<td style='width:9%;'>
-								<a href='register_form.php?customerID=$user_id' class='btn mini black'><i class='icon-edit'></i> Update</a></td>			
+								<a href='register_form.php?customerID=$user_id' class='btn btn-success'><i class='icon-edit'></i> Update</a></td>			
 						</tr>";
 					}
 				} ?>

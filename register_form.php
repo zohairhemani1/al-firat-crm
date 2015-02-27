@@ -633,7 +633,7 @@ function addInput()
 	// alert(counter);
      var boxName="textBox"+countBox;	
 		
-		document.getElementById('response').innerHTML+='<div class="control-group">\
+		document.getElementById('response').innerHTML+='<div id="delete"><br/><div class="control-group">\
                       <label class="control-label">Packages</label>\
                       <div class="controls">\
                         <select id="'+boxName+'" name="packageID['+ counter +']" class="span6 chosen packageDropDown" data-placeholder="Choose a Category">\
@@ -653,24 +653,29 @@ function addInput()
                     </div>\
 					<div class="control-group">\
 					<div class="controls">\
-						<label class="radio">\
-							<input type="radio" name="optionsRadios['+counter+']" value="1" />\
-							Fixed\
-						</label>\
-						<label class="radio">\
-							<input type="radio" name="optionsRadios['+counter+']" value="0" />\
-							Unfixed\
-						</label>\
-						<label class="radio">\
-							<input type="radio" name="optionsRadios['+counter+']" value="-1" />\
-							Expired\
-						</label>\
-					</div></div>';
+						<div class="1">\
+						<input type="radio" name="optionsRadios['+counter+']" class="css-checkbox" value="1" checked />\
+						<label for="radio4" class="css-label  radGroup2">Fixed</label>\
+						<input type="radio" name="optionsRadios['+counter+']" class="css-checkbox" value="0">\
+						<label for="radio5" class="css-label radGroup2">Unfixed</label>\
+						<input type="radio" name="optionsRadios['+counter+']" class="css-checkbox" value="-1">\
+						<label for="radio6" class="css-label radGroup2">Expired</label>\
+						</div>\
+					</div></div><button class="btn btn-danger" id="Delete"><i class="icon-remove icon-white"></i>&nbsp;Delete</button>';
 		
      countBox += 1;
 	 counter++;
 }
-</script> 
+</script>
+<script>
+$(function(){
+
+    $('#Delete').live('click',function(e){
+    $(this).parent().remove();
+    });
+ 
+});
+</script>
 
 <!-- END JAVASCRIPTS -->
 </body>

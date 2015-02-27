@@ -46,7 +46,7 @@
 <meta name="description" content="">
 <meta name="author" content="Wahab Jawed">
 <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
-<title>Signin - Munik</title>
+<title>Login - Al Furat</title>
 
 <!-- Bootstrap core CSS -->
 <link href="stylesheet/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">

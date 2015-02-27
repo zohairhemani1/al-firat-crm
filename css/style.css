@@ -3949,7 +3949,7 @@ margin-left: 285px;
     width: 63px;
 	margin-top: 3px;
 }
-#delete{
+#deletes{
 	margin-left:5px;
 }
 
@@ -3957,3 +3957,31 @@ margin-left: 285px;
 .employe {
     margin-left: 33%;
 }
+#Delete {
+    margin-left: 182px;
+}
+input[type=radio].css-checkbox {
+							 z-index:-1000; left:-1000px; height:1px; width:1px; margin:0px; padding:0; border:0;margin-top: -4px;;
+						}
+
+						input[type=radio].css-checkbox + label.css-label {
+							;
+							display:inline-block;
+							line-height:13px;
+							background-repeat:no-repeat;
+							background-position: 0 0;
+							font-size:13px;
+							vertical-align:middle;
+							cursor:pointer;
+
+						}
+
+						label.css-label {
+				-webkit-touch-callout: none;
+				-webkit-user-select: none;
+				-khtml-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+			}
+			label {margin-right:20px;}

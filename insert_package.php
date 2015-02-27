@@ -183,16 +183,17 @@ var countBox =1;
 function addInput()
 {
      var boxName="textBox"+countBox; 
-document.getElementById('responce').innerHTML+='<div id="delete"><br/><label class="control-label">Package Name</label>\
-<input required name="id['+countBox+']" id="'+boxName+'" type="text" class="span6"/><button class="btn btn-danger" id="Delete"><i class="icon-remove icon-white"></i>Delete</button><br/>';
+document.getElementById('responce').innerHTML+='<div id="deletes"><br/><label class="control-label">Package Name</label>\
+<input required name="id['+countBox+']" id="'+boxName+'" type="text" class="span6"/><button class="btn btn-danger" id="Deletes">&nbsp;<i class="icon-remove icon-white"></i>Delete</button><br/>';
      countBox += 1;
 
 }
 </script>
+
 <script>
 $(function(){
 
-    $('#Delete').live('click',function(e){
+    $('#Deletes').live('click',function(e){
     $(this).parent().remove();
     });
  
