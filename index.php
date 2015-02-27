@@ -47,10 +47,7 @@ include 'headers/menu-top-navigation.php';
             <div class="row-fluid">
                <div class="span12">
                    <!-- BEGIN THEME CUSTOMIZER-->
-                   <div id="theme-change" class="hidden-phone">
-                       <i class="icon-cogs"></i>
-                        
-                   </div>
+                  
                    <!-- END THEME CUSTOMIZER-->
                   <!-- BEGIN PAGE TITLE & BREADCRUMB-->     
                    <h3 class="page-title">
@@ -102,16 +99,13 @@ include 'headers/menu-top-navigation.php';
                     <!-- BEGIN EXAMPLE TABLE widget-->
                     <div class="widget">
                         <div class="widget-title">
-                            <h4><i class="icon-reorder"></i>Editable Table</h4>
-                            <span class="tools">
-                                <a href="javascript:;" class="icon-chevron-down"></a>
-                                <a href="javascript:;" class="icon-remove"></a>
-                            </span>
+                            <h4><i class="icon-reorder"></i>Index</h4>
+                            
                         </div>
                         <div class="widget-body">
                             <div class="portlet-body">
                                 
-                                <div class="space15"></div>
+                                <div id="width" class="space15"></div>
                                 <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
                                     <thead>
                                     <tr>
@@ -120,8 +114,10 @@ include 'headers/menu-top-navigation.php';
                                     <th>Address</th>
                                     <th>Email</th>
                                     <th>Status</th>
+                                        <div class="widths">
                                         <th style="display:none">Edit</th>
                                         <th style="display:none">Delete</th>
+                                    </div>
                                     </tr>
                      
                                            </thead>
@@ -141,8 +137,8 @@ include 'headers/menu-top-navigation.php';
 					<td>${user_name}</td>
 					<td>${location}</td>
 					<td>{$email}</td>
-					<td style='width:15%;'><a href='delete_form.php?user_id=$user_id' class='btn mini black'><i class='icon-trash'></i> Delete</a>
-					<a href='register_form.php?customerID=$user_id' class='btn mini black'><i class='icon-edit'></i> Update</a></td>
+					<td style='width:15%;'><a href='delete_form.php?user_id=$user_id' class='btn btn-danger' id='delete_button'><i class='icon-trash'></i> Delete</a>
+					<a href='register_form.php?customerID=$user_id' id='update_button' class='btn btn-success'><i class='icon-edit'></i> Update</a></td>
 					<td style='display:none'><a class='' href='javascript:;'>Edit</a></td>
 					<td style='display:none'><a class='' href='javascript:;'>Delete</a></td>
 				</tr>

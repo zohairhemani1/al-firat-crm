@@ -131,10 +131,7 @@ include 'headers/menu-top-navigation.php';
                        <li>
                            <a href="#"><i class="icon-home"></i></a><span class="divider">&nbsp;</span>
                        </li>
-                       <li>
-                           <a href="#"><?php echo strtoupper($_username); ?></a> <span class="divider">&nbsp;</span>
-                       </li>
-                       <li><a href="#">Customers List</a><span class="divider-last">&nbsp;</span></li>
+                       <li><a href="#">Repoting</a><span class="divider-last">&nbsp;</span></li>
                    </ul>
                   <!-- END PAGE TITLE & BREADCRUMB-->
                </div>
@@ -159,9 +156,9 @@ include 'headers/menu-top-navigation.php';
             <div class="control-group" id="date_range">
             <label class="control-label">Date Range</label>
             <div id="text_field" class="controls">
-                <input class="m-wrap small" size="16" type="text" value="" id="ui_date_picker_range_from" name="dateFrom"/>
+                <input class="m-wrap small" size="16" type="text" placeholder="Starting Date" value="" id="ui_date_picker_range_from" name="dateFrom"/>
                     <span class="text-inline">&nbsp;to&nbsp;</span>
-                <input class="m-wrap small" size="16" type="text" value="" id="ui_date_picker_range_to" name="dateTo"/>
+                <input class="m-wrap small" size="16" type="text" placeholder="End Date" value="" id="ui_date_picker_range_to" name="dateTo"/>
             </div>
         </div>
 

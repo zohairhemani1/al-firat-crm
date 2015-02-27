@@ -87,7 +87,7 @@ include 'headers/menu-top-navigation.php';
                     <!-- BEGIN EXAMPLE TABLE widget-->
                     <div class="widget">
                         <div class="widget-title">
-                            <h4><i class="icon-reorder"></i>Managed Table</h4>
+                            <h4><i class="icon-reorder"></i>All Package</h4>
                             <span class="tools">
                                 <a href="javascript:;" class="icon-chevron-down"></a>
                                 <a href="javascript:;" class="icon-remove"></a>
@@ -118,9 +118,9 @@ include 'headers/menu-top-navigation.php';
 					echo"<tr class=''>
 					<td class=''>${packageID}</td>
 					<td class=''>${package_name}</td>
-					<td style='width:26%;'><a href='delete_package.php?package_id=$packageID' class='btn mini black' onClick='return deleteConfirm(30);'>
+					<td style='width:26%;'><a href='delete_package.php?package_id=$packageID' id='delete_button' class='btn btn-danger' onClick='return deleteConfirm(30);'>
 					<i class='icon-trash'></i> Delete </a>
-					<a href='insert_package.php?packageID=$packageID' class='btn mini black'>
+					<a href='insert_package.php?packageID=$packageID'  id='update_button' class='btn btn-success'>
 					<i class='icon-edit'></i> Update</a></td>
 					<td style='display:none'><a class='' href='javascript:;'>Edit</a></td>
 				<td style='display:none'><a class='' href='javascript:;'>Delete</a></td>

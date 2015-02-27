@@ -3,7 +3,7 @@
 include 'headers/connect_to_mysql.php';
 $packageName = "";
 $formAction = "";
-
+$title = "";
 	isset($_GET['packageID']);
 	echo "package_id-->{$packageID}";
 
@@ -27,6 +27,7 @@ if($_POST)
 		$packageName = $packageName[0];
 		$query = "UPDATE `package` SET `package_name` = '{$packageName}' WHERE `package_id` = '{$packageID}' ";
 		$result = mysqli_query($con,$query);
+		$title = "Update Package";
 		header('Location:package_view.php');
 	}
 	else
@@ -36,6 +37,7 @@ if($_POST)
 			echo "KEY: ", $value;
 			$query = "INSERT INTO package(`package_name`) VALUES ('$value')";
 			$result = mysqli_query($con,$query);
+			$title = "Add Package";
 		}	
 	}
 }
@@ -52,7 +54,7 @@ if($_POST)
 <!-- Mirrored from thevectorlab.net/adminlab/editable_table.html by HTTrack Website Copier/3.x [XR&CO'2013], Tue, 04 Nov 2014 07:58:54 GMT -->
 <head>
 <meta charset="utf-8" />
-<title>Add Package</title>
+<title><?php if(isset($packageID)){ $title = "Update package"; echo $title;}else{$title="Add Package"; echo $title;}?></title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 <meta content="" name="description" />
 <meta content="" name="author" />
@@ -97,7 +99,7 @@ include 'headers/menu-top-navigation.php';
         <ul class="breadcrumb">
           <li> <a href="#"><i class="icon-home"></i></a><span class="divider">&nbsp;</span> </li>
           <li> <a href="#"><?php echo strtoupper($_username); ?></a> <span class="divider">&nbsp;</span> </li>
-          <li><a href="#">Add Package</a><span class="divider-last">&nbsp;</span></li>
+          <li><a href="#"><?php echo $title ; ?></a><span class="divider-last">&nbsp;</span></li>
         </ul>
         <!-- END PAGE TITLE & BREADCRUMB--> 
       </div>
@@ -108,7 +110,7 @@ include 'headers/menu-top-navigation.php';
       <div class="span12">
         <div class="widget box blue" id="form_wizard_1">
           <div class="widget-title">
-            <h4> <i class="icon-reorder"></i> Add Package Form <span class="step-title"></span> </h4>
+            <h4> <i class="icon-reorder"></i><?php echo $title;?> <span class="step-title"></span> </h4>
             <span class="tools"> <a href="javascript:;" class="icon-chevron-down"></a> <a href="javascript:;" class="icon-remove"></a> </span> </div>
           <div class="widget-body form">
             <form action="insert_package.php<?php echo $formAction; ?>" method="post" class="form-horizontal" id="myForm">
@@ -122,7 +124,7 @@ include 'headers/menu-top-navigation.php';
 					echo "display:none;";
 				}
 				?>">
-                    <button name="button" onclick="addInput()" type="button" class="btn green addPackage"> Add New <i class="icon-plus"></i> </button>
+                    <button name="button" onclick="addInput()" type="button" class="btn btn-primary"> Add New <i class="icon-plus"></i> </button>
                   </div>
                   <div class="space15"></div>
                   <label class="control-label">Package Name</label>
@@ -182,7 +184,7 @@ function addInput()
 {
      var boxName="textBox"+countBox; 
 document.getElementById('responce').innerHTML+='<div id="delete"><br/><label class="control-label">Package Name</label>\
-<input required name="id['+countBox+']" id="'+boxName+'" type="text" class="span6"/><button class="Delete">Delete</button><br/>';
+<input required name="id['+countBox+']" id="'+boxName+'" type="text" class="span6"/><button class="btn btn-danger" id="Delete"><i class="icon-remove icon-white"></i>Delete</button><br/>';
      countBox += 1;
 
 }
@@ -190,7 +192,7 @@ document.getElementById('responce').innerHTML+='<div id="delete"><br/><label cla
 <script>
 $(function(){
 
-    $('.Delete').live('click',function(e){
+    $('#Delete').live('click',function(e){
     $(this).parent().remove();
     });
  

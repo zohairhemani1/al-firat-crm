@@ -3033,7 +3033,7 @@ div.tagsinput .not_valid {
 .dataTables_paginate,
 .dataTables_filter {
     float: right;
-	margin-right: -225px;
+	margin-right: -43%;
 }
 
 
@@ -3938,4 +3938,26 @@ right:0px;
 }
 #reportButtons {
 margin-left: 285px;
+}
+.center {
+    margin-top: -6px;
+}
+#update_button {
+    margin-top: 3px;
+}
+#delete_button {
+    width: 63px;
+	margin-top: 3px;
+}
+#delete{
+	margin-left:5px;
+}
+<!--Adding media query on search box -->
+@media screen and (max-width: 1199px) {
+
+.dataTables_paginate, .dataTables_filter {
+    float: right;
+    margin-right: -83%;
+	display:none;
+}
 }

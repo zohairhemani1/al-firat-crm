@@ -92,9 +92,9 @@
           <div class="input-prepend"> <span class="add-on"><i class="icon-key"></i></span>
             <input id="input-password" name="password" type="password" placeholder="Password" />
           </div>
-          <div class="mtop10">
+          <div style="display:none" class="mtop10">
             <div class="block-hint pull-left small">
-              <input type="checkbox" id="">
+              <input  type="checkbox" id="">
               Remember Me </div>
           </div>
           <div class="clearfix space5"></div>
