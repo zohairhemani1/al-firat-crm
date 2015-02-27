@@ -30,91 +30,96 @@
 		$description = $_POST['description'];
 		$queryID = $_POST['queryID']; // hidden field
 		$optionsRadios = $_POST['optionsRadios'];
+		$error = "";
 		
-		if(isset($_GET['customerID']))
+		if(!isset($mobile) || $mobile == "" || empty($mobile))
 		{
-			/* UPDATE THE EXISTING CUSTOMER */
-			$customerID = $_GET['customerID'];
-			$query = "UPDATE `form` SET `emp_id` = '$emp_id', `user_name` = '$user_name', `mobile` = '$mobile', `mobile_other` = '$mobile_other', `tele` = '$tele', `location` = '$location', `email` = '$email', `time_stamp` = now() WHERE user_id = '$customerID'";
-			$result = mysqli_query($con,$query);
-			
-			
-			for($i=0; $i<count($_POST['packageID']); $i++)
-			{
-				
-				/*here we check if the query already exist, if yes then we update else we insert as a new query.*/
-				
-				$query = "SELECT * FROM `query` WHERE `id` = '{$queryID[$i]}'";
-				$result = mysqli_query($con,$query);
-				$count = mysqli_num_rows($result);
-				if($count == 1)
-				{
-					$query = "UPDATE `query` set `package_id` = '$packageID[$i]', `time_stamp` = now(), `description` = '$description[$i]', 
-							`emp_id` = '$emp_id',`status` = '$optionsRadios[$i]' WHERE `id` = '$queryID[$i]'";
-					$result = mysqli_query($con,$query) or die("ERROR!");
-				}
-				else
-				{
-					$query = "INSERT INTO `query` (`user_id`,`emp_id`,`package_id`,`time_stamp`,`description`,`status`) VALUES('$customerID','$emp_id','$packageID[$i]',now(),'$description[$i]','$optionsRadios[$i]')";
-					$result = mysqli_query($con,$query);
-				}
-				
-			}
-			
-			
-		} // ENDING IF OF ISSET.
+			$error = "PLEASE ENTER YOUR MOBILE NUMBER!";
+		}
 		else
 		{
-		
-			$query = "INSERT INTO `form`(`emp_id`,`user_name`, `mobile`, `mobile_other`, `tele`, `location`, `email`, `time_stamp`) VALUES ('$emp_id','$user_name','$mobile','$mobile_other','$tele','$location','$email',now())"
-			or die ('sorry there is an error in login Insert code');
-			$result = mysqli_query($con,$query);
-			
-			/* 
-				GETTING THE LAST ROW THAT IS INSERTED.
-			*/
-			
-			
-			$query = "select max(`user_id`) as maxID from `form`";
-			$result = mysqli_query($con,$query);
-			$row = mysqli_fetch_assoc($result);
-			$user_id = $row['maxID'];
-			
-			
-			
-			/*
-				INSERTING MULTIPLE QUERIES BELOW.
-			*/
-			
-			
-			
-			
-				if(isset($_POST["packageID"]))
+			if(isset($_GET['customerID']))
+			{
+				/* UPDATE THE EXISTING CUSTOMER */
+				$customerID = $_GET['customerID'];
+				$query = "UPDATE `form` SET `emp_id` = '$emp_id', `user_name` = '$user_name', `mobile` = '$mobile', `mobile_other` = '$mobile_other', `tele` = '$tele', `location` = '$location', `email` = '$email', `time_stamp` = now() WHERE user_id = '$customerID'";
+				$result = mysqli_query($con,$query);
+				
+				
+				for($i=0; $i<count($_POST['packageID']); $i++)
 				{
 					
-					$packageIDArray = $_POST['packageID'];
-					$descriptionArray = $_POST['description'];
+					/*here we check if the query already exist, if yes then we update else we insert as a new query.*/
 					
-					for($i=0; $i<count($_POST['packageID']); $i++)
+					$query = "SELECT * FROM `query` WHERE `id` = '{$queryID[$i]}'";
+					$result = mysqli_query($con,$query);
+					$count = mysqli_num_rows($result);
+					if($count == 1)
 					{
-						/*echo "PACKAGEID: ". $packageIDArray[$i];
-						echo "<br/>";
-						echo "DESCRIPTION: " . $descriptionArray[$i];*/
-						
-						$query = "INSERT into query(`user_id`,`emp_id`,`package_id`,`time_stamp`,`description`,`status`)
-								VALUES ('$user_id','$emp_id','$packageIDArray[$i]',now(),'$descriptionArray[$i]','$optionsRadios[$i]')";
+						$query = "UPDATE `query` set `package_id` = '$packageID[$i]', `time_stamp` = now(), `description` = '$description[$i]', 
+								`emp_id` = '$emp_id',`status` = '$optionsRadios[$i]' WHERE `id` = '$queryID[$i]'";
+						$result = mysqli_query($con,$query) or die("ERROR!");
+					}
+					else
+					{
+						$query = "INSERT INTO `query` (`user_id`,`emp_id`,`package_id`,`time_stamp`,`description`,`status`) VALUES('$customerID','$emp_id','$packageID[$i]',now(),'$description[$i]','$optionsRadios[$i]')";
 						$result = mysqli_query($con,$query);
-						
 					}
 					
-					
 				}
-			} // ENDING ELSE OF ISSET()
+				
+				
+			} // ENDING IF OF ISSET.
+			else
+			{
 			
-			if ($nobile == null){
+				$query = "INSERT INTO `form`(`emp_id`,`user_name`, `mobile`, `mobile_other`, `tele`, `location`, `email`, `time_stamp`) VALUES ('$emp_id','$user_name','$mobile','$mobile_other','$tele','$location','$email',now())"
+				or die ('sorry there is an error in login Insert code');
+				$result = mysqli_query($con,$query);
+				
+				/* 
+					GETTING THE LAST ROW THAT IS INSERTED.
+				*/
+				
+				
+				$query = "select max(`user_id`) as maxID from `form`";
+				$result = mysqli_query($con,$query);
+				$row = mysqli_fetch_assoc($result);
+				$user_id = $row['maxID'];
+				
+				
+				
+				/*
+					INSERTING MULTIPLE QUERIES BELOW.
+				*/
+				
+				
+				
+				
+					if(isset($_POST["packageID"]))
+					{
+						
+						$packageIDArray = $_POST['packageID'];
+						$descriptionArray = $_POST['description'];
+						
+						for($i=0; $i<count($_POST['packageID']); $i++)
+						{
+							/*echo "PACKAGEID: ". $packageIDArray[$i];
+							echo "<br/>";
+							echo "DESCRIPTION: " . $descriptionArray[$i];*/
+							
+							$query = "INSERT into query(`user_id`,`emp_id`,`package_id`,`time_stamp`,`description`,`status`)
+									VALUES ('$user_id','$emp_id','$packageIDArray[$i]',now(),'$descriptionArray[$i]','$optionsRadios[$i]')";
+							$result = mysqli_query($con,$query);
+							
+						}
+						
+						
+					}
+				} // ENDING ELSE OF ISSET()
 			
-			}
-		} // IF Post ends here.
+		}
+	} // IF Post ends here.
 	
 	else
 	{
@@ -247,7 +252,7 @@ include 'headers/menu-top-navigation.php';
                       <label class="control-label">Username</label>
                       <div class="controls">
                         <div class="input-icon left"> <i class="icon-user"></i>
-                          <input required name="user_name" id="inputUser" placeholder="Enter your name" type="text" class="span6" value="<?php echo $user_name; ?>" />
+                          <input name="user_name" id="inputUser" placeholder="Enter your name" type="text" class="span6" value="<?php echo $user_name; ?>" />
                           <span class="help-inline"></span> </div>
                       </div>
                     </div>
@@ -255,7 +260,7 @@ include 'headers/menu-top-navigation.php';
                       <label class="control-label">Email</label>
                       <div class="controls">
                         <div class="input-icon left"> <i class="icon-envelope"></i>
-                          <input required id="inputEmail" name="email" placeholder="Enter your email" type="text" class="span6" value="<?php echo $email; ?>" />
+                          <input id="inputEmail" name="email" placeholder="Enter your email" type="text" class="span6" value="<?php echo $email; ?>" />
                           <span class="help-inline"></span> </div>
                       </div>
                     </div>
@@ -263,14 +268,14 @@ include 'headers/menu-top-navigation.php';
                       <label class="control-label">Location</label>
                       <div class="controls">
                         <div class="input-icon left"> <i class="icon-map-marker"></i>
-                          <input required id="inputLocation" name="location" placeholder="Enter your location" type="text" class="span6" value="<?php echo $location;?>" />
+                          <input id="inputLocation" name="location" placeholder="Enter your location" type="text" class="span6" value="<?php echo $location;?>" />
                           <span class="help-inline"></span> </div>
                       </div>
                     </div>
                     <div class="control-group">
                       <label class="control-label">Mobile 1</label>
                       <div class="controls">
-                        <input required id="phone" name="mobile" class="span6" type="text" placeholder="Enter your mobile no" value="<?php echo $mobile; ?>">
+                        <input id="phone" name="mobile" class="span6" type="text" placeholder="Enter your mobile no" value="<?php echo $mobile; ?>">
                         <span class="help-inline"></span> </div>
                     </div>
                     <div class="control-group">
@@ -283,7 +288,7 @@ include 'headers/menu-top-navigation.php';
                       <label class="control-label">Tele #</label>
                       <div class="controls">
                         <div class="input-icon left"> <i class="icon-book"></i>
-                          <input required id="inputTele" name="tele" class="span6" type="text" placeholder="Enter your tele no" value="<?php echo $tele; ?>" />
+                          <input id="inputTele" name="tele" class="span6" type="text" placeholder="Enter your tele no" value="<?php echo $tele; ?>" />
                           <span class="help-inline"></span> </div>
                       </div>
                     </div>
@@ -330,7 +335,7 @@ include 'headers/menu-top-navigation.php';
 									<div class='control-group'>
 									  <label class='control-label'>Description</label>
 									  <div class='controls'>
-										<textarea required name='description[{$counter}]' id='inputDescription' class='span6 ' rows='3'>{$description}
+										<textarea name='description[{$counter}]' id='inputDescription' class='span6 ' rows='3'>{$description}
 										</textarea>
 										
                           
@@ -385,7 +390,7 @@ include 'headers/menu-top-navigation.php';
                     <div class='control-group'>
                       <label class='control-label'>Description</label>
                       <div class='controls'>
-                        <textarea required name='description[0]' id='inputDescription' class='span6 ' rows='3'></textarea>
+                        <textarea name='description[0]' id='inputDescription' class='span6 ' rows='3'></textarea>
                       </div>
                     </div>
 					
@@ -474,7 +479,7 @@ include 'headers/menu-top-navigation.php';
                   
                 </div>
 
-                <div class="form-actions clearfix"> <a href="javascript:;" class="btn button-previous"> <i class="icon-angle-left"></i> Back </a>  <button id="continueButton" onclick="return validate()" class="btn btn-primary blue button-next" type="button" class="" >Continue <i class="icon-angle-right"></button></i>  
+                <div class="form-actions clearfix"> <a href="javascript:;" class="btn button-previous"> <i class="icon-angle-left"></i> Back </a>  <button id="continueButton" class="btn btn-primary blue button-next" type="button" class="" >Continue <i class="icon-angle-right"></button></i>  
                   <!-- <a href="" id="submitThis" class="btn btn-success button-submit" onClick="document.getElementById("myForm").submit();" >-->
 
 				<input type="submit"  class="btn btn-success button-submit" />
@@ -620,7 +625,7 @@ function addInput()
                     <div class="control-group">\
                       <label class="control-label">Description</label>\
                       <div class="controls">\
-                        <textarea required name="description['+ counter +']" id="'+boxName+'" class="span6 " rows="3"></textarea>\
+                        <textarea name="description['+ counter +']" id="'+boxName+'" class="span6 " rows="3"></textarea>\
                       </div>\
                     </div>\
 					<div class="control-group"><div class="controls">\
