@@ -19,7 +19,7 @@ div.dataTables_info {
 div.dataTables_paginate {
 	float: right;
 	margin: 0;
-	margin-right: -228px !important;
+	/*margin-right: -228px !important;*/
 }
 
 table.table {

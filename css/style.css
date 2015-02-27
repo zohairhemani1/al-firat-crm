@@ -3033,7 +3033,7 @@ div.tagsinput .not_valid {
 .dataTables_paginate,
 .dataTables_filter {
     float: right;
-	margin-right: -43%;
+	/*margin-right: -43%;*/
 }
 
 
@@ -3952,15 +3952,8 @@ margin-left: 285px;
 #delete{
 	margin-left:5px;
 }
-<!--Adding media query on search box -->
-@media screen and (max-width: 1199px) {
 
-.dataTables_paginate, .dataTables_filter {
-    float: right;
-    margin-right: -83%;
-	display:none;
-}
-}
+
 .employe {
     margin-left: 33%;
 }
