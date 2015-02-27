@@ -14,6 +14,7 @@
 	$packageID = "";
 	$description = "";
 	$queryID = ""; // hidden field
+	$counter="";
 	
 	
 	if($_POST)
