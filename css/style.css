@@ -3961,7 +3961,7 @@ margin-left: 285px;
     margin-left: 182px;
 }
 input[type=radio].css-checkbox {
-							 z-index:-1000; left:-1000px; height:1px; width:1px; margin:0px; padding:0; border:0;margin-top: -4px;;
+							 z-index:-1000; left:-1000px; height:auto; width:auto; margin:0px; padding:0; border:0;margin-top: -6px;;
 						}
 
 						input[type=radio].css-checkbox + label.css-label {
