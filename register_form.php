@@ -73,6 +73,8 @@
 					
 				}
 				
+				header('Location: index.php');
+				
 				
 			} // ENDING IF OF ISSET.
 			else
@@ -121,6 +123,9 @@
 						
 						
 					}
+					
+					header('Location: index.php');
+					
 				} // ENDING ELSE OF ISSET()
 			
 		}
