@@ -58,10 +58,28 @@
 					
 					$query = "SELECT * FROM `query` WHERE `id` = '{$queryID[$i]}'";
 					$result = mysqli_query($con,$query);
+					$rowQuery = mysqli_fetch_assoc($result);
 					$count = mysqli_num_rows($result);
+					$descriptionFromDatabase = $rowQuery['description'];
+					$timestamp = $rowQuery['time_stamp'];
+					
 					if($count == 1)
 					{
-						$query = "UPDATE `query` set `package_id` = '$packageID[$i]', `time_stamp` = now(), `description` = '$description[$i]', 
+						// check if old query has been updated or not. if not, then we will use old timestamp.
+					echo "DescriptionLocal: " .$description[$i];
+					echo "<br/>";
+					echo "DescriptionGlobal: " .$descriptionFromDatabase;
+					echo "<br/>";
+						
+						if($description[$i]===$descriptionFromDatabase)
+						{
+						}
+						else
+						{
+							$timestamp = date("Y-m-d H:i:s");
+						}
+						
+						$query = "UPDATE `query` set `package_id` = '$packageID[$i]', `time_stamp` = '$timestamp', `description` = '$description[$i]', 
 								`emp_id` = '$emp_id',`status` = '$optionsRadios[$i]' WHERE `id` = '$queryID[$i]'";
 						$result = mysqli_query($con,$query) or die("ERROR!");
 					}
@@ -359,8 +377,7 @@ include 'headers/menu-top-navigation.php';
 									<div class='control-group'>
 									  <label class='control-label'>Description</label>
 									  <div class='controls'>
-										<textarea name='description[{$counter}]' id='inputDescription' class='span6 ' rows='3'>{$description}
-										</textarea>
+										<textarea name='description[{$counter}]' id='inputDescription' class='span6 ' rows='3'>{$description}</textarea>
 					
 										
                           
