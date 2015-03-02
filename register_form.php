@@ -66,10 +66,6 @@
 					if($count == 1)
 					{
 						// check if old query has been updated or not. if not, then we will use old timestamp.
-					echo "DescriptionLocal: " .$description[$i];
-					echo "<br/>";
-					echo "DescriptionGlobal: " .$descriptionFromDatabase;
-					echo "<br/>";
 						
 						if($description[$i]===$descriptionFromDatabase)
 						{
