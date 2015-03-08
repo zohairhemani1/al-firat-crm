@@ -7,11 +7,11 @@ $query = $_GET['query'];
 
 if($_GET['type']=="email")
 {
-	echo "EMAILS:\n";
+	//echo "EMAILS:\n";
 }
 else
 {
-	echo "PHONE:\n";
+	//echo "PHONE:\n";
 }
 //$query = "SELECT * FROM `form`";
 
@@ -68,20 +68,20 @@ while($row = mysql_fetch_assoc($result))
 	if($_GET['type']=="email")
 	{
 		$out .= $row['customerEmail'];
-		$out .= "\n";
+		$out .= ",";
 	}
 	else
 	{
 		$out .= $row['mobile'];
 		//$out .= $row['mobile_other'];
 		//$out .= $row['tele'];
-		$out .= "\n";
+		$out .= ",";
 	}
 
 }
 
-header("Content-type: text/csv");
-header("Content-Disposition: attachment; filename={$_GET['type']}.csv");
+//header("Content-type: text/csv");
+//header("Content-Disposition: attachment; filename={$_GET['type']}.csv");
 
 echo $out;
 

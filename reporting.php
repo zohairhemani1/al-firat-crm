@@ -293,12 +293,18 @@ include 'headers/menu-top-navigation.php';
 			
 			<div id="reportButtons">
 			
-				<form method="post" action="downloadCSV.php?type=email&query=<?php echo $query_main; ?>">
+				<!--<form method="post" action="downloadCSV.php?type=email&query=<?php echo $query_main; ?>">
 					<input class = 'btn btn-success button-submit' type="submit" value="DOWNLOAD EMAIL AS .CSV" />
 				</form>
 				<form method="post" action="downloadCSV.php?type=phone&query=<?php echo $query_main; ?>">
 					<input type="submit" class='btn btn-success button-submit' value="DOWNLOAD PHONE NUMBER AS .CSV" />
-				</form>
+				</form>-->
+				<a href="downloadCSV.php?type=email&query=<?php echo $query_main; ?>" target="_blank">
+					<input class ="btn btn-success button-submit" type="submit" value="DOWNLOAD EMAIL AS .CSV" />
+				</a>
+				<a href="downloadCSV.php?type=phone&query=<?php echo $query_main; ?>" target="_blank">
+					<input class = "btn btn-success button-submit" type="submit" value="DOWNLOAD PHONE NUMBER AS .CSV" />
+				</a>
 			</div>
 			
 			<!-- END ADVANCED TABLE widget-->
